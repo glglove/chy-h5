@@ -1,0 +1,27 @@
+{
+  "name": "chy-gaol",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glglove/chy-h5.git"
+  },
+  "author": "gaol",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/glglove/chy-h5/issues"
+  },
+  "homepage": "https://github.com/glglove/chy-h5#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "qs": "^6.7.0",
+    "socket.io-client": "^2.3.0",
+    "vuex": "^3.3.0",
+    "vuex-persistedstate": "^3.0.1"
+  },
+  "devDependencies": {}
+}

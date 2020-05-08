@@ -1,3 +1,6 @@
+/*
+*  index 首页
+*/
 <template>
 	<view class="content">
 		<image class="logo" src="/static/logo.png"></image>
