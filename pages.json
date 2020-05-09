@@ -10,7 +10,8 @@
 		},
 		//#endif
 		{
-			"path" : "pages/find/find",
+			// "path" : "pages/find/find",
+			"path" : "pages/amos-login/login",
 			"style" : {
 				"navigationBarTitleText":"发现",
 				"enablePullDownRefresh":false,

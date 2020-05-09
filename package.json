@@ -4,7 +4,9 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "h5": "cd D:/ruanjiananzhuangbao/HBuilderX.1.9.9.20190522.full/HBuilderX/plugins/uniapp-cli/ && cross-env UNI_INPUT_DIR=$INIT_CWD/ UNI_OUTPUT_DIR=$INIT_CWD/unpackage/dist/dev/h5 UNI_PLATFORM=h5 NODE_ENV=development node bin/uniapp-cli.js",  
+    "app": "cd D:/ruanjiananzhuangbao/HBuilderX.1.9.9.20190522.full/HBuilderX/plugins/uniapp-cli/ && cross-env UNI_INPUT_DIR=$INIT_CWD/ UNI_OUTPUT_DIR=$INIT_CWD/unpackage/dist/dev/app-plus UNI_PLATFORM=app-plus NODE_ENV=development node bin/uniapp-cli.js"    
   },
   "repository": {
     "type": "git",
