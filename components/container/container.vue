@@ -19,13 +19,13 @@
 	.container-box-cmp {
 		position: relative;
 		width: 100%;
-		height: 100%;
+		min-height: 100vh;
 		.top-loadding {
 			
 		}
 		.container {
 			position: relative;
-			overflow: hidden;
+			// overflow: hidden;
 			box-sizing: border-box;
 			opacity: 0;
 		}
@@ -105,7 +105,7 @@
 		
 		<!-- common mask 遮挡层-->
 		<!-- containerMaskFlag: {{containerMaskFlag}} -->
-<!-- 		<view :class="['container_mask', aniClass1]" @tap="handleMaskTap" v-show="containerMaskFlag"></view> -->
+		<!--<view :class="['container_mask', aniClass1]" @tap="handleMaskTap" v-show="containerMaskFlag"></view> -->
 
 		<!-- allLoading（全屏的loading层）-->
 		<!-- <view :class="['container_allLoading', aniClass]" v-show="containerAllloadingFlag"> -->
@@ -227,7 +227,7 @@
 						padding-bottom:${this.bottom}px;
 						padding-left:${this.left}px;
 						padding-right:${this.right}px;
-						height:${this.pHeight}px;
+						min-height:${this.pHeight}px;
 						opacity:${this.containerAllloadingFlag?0:1}`				
 			}
 			// 小程序上面 自动检测 是否有授权

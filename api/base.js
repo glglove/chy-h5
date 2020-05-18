@@ -1,4 +1,4 @@
-import configs from './config'
+import configs from './configs'
 import Axios from 'axios'
  
 // 创建axios实例

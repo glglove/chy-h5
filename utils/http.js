@@ -114,7 +114,7 @@ export default {
 					confirmText: '登陆',
 					success: res => {
 						uni.navigateTo({
-							url: '../login/login',
+							url: '../amos-login/login',
 							success: res => {
 								console.log("调转到了登陆页面")
 							},

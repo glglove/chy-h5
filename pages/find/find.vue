@@ -1,6 +1,6 @@
 <style lang="less" scoped>
-	uni-page-wrapper{
-		// height: calc(100% - 50px);
+	uni-page-body {
+		height: 100%
 	}
 	#findBox{
 		position: absolute;
@@ -289,7 +289,7 @@
 			
 			<!---未登录-->
 			<view v-if="!userToken" class="find-notLogin">
-                <view class="title">
+                <view class="title" @click="clickBtn">
                     您好 游客。
                 </view>
                 <view class="ul">
@@ -417,7 +417,7 @@
 								if (this.forcedLogin) {
 									// this.reLaunchPage("../login/login");
 								} else {
-									this.navigatePage("../login/login");
+									this.navigatePage("../amos-login/login");
 								}
 							}else {
 								// 取消
@@ -452,6 +452,9 @@
 			refreshPage() {
 				// debugger
 				this._getRankDayData()
+			},
+			clickBtn(){
+				this.navigatePage("../packageA/find/signUpRecord/index")
 			},
 			// 获取list 列表数据
 			_getRankDayData () {

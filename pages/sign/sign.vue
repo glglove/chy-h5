@@ -367,6 +367,9 @@
 </script>
 
 <style lang="less" scoped>
+uni-page-body {
+	height: 100%
+}
 #sign {
 	// position: absolute;
 	// top: 0;
@@ -375,7 +378,9 @@
 	// bottom: 0;
 	// margin: auto;	
 	// min-height: 1110upx;
+	padding-bottom: calc(var(--window-bottom));
 	background-color: rgba(251,250,249,1);
+	box-sizing:  border-box;
 	.bgBox {
 		width: 100%;
 		height: 400upx;

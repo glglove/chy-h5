@@ -66,6 +66,23 @@
 .github_color{
 	color: #24292E;
 }
+.registerOrFind{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	font-size: 28upx;
+	margin-top: 16upx;
+	color: rgba(0,0,0,0.7);
+	text-align: center;
+	height: 40upx;
+	line-height: 40upx;
+}
+.registerOrFind text{
+	font-size: 24upx;
+	margin-left: 15upx;
+	margin-right: 15upx;
+}
 
 /* 底部 */
 .footer{

@@ -14,7 +14,11 @@ body
     background-color #D5D5D5 
 
 .page 
-  min-height calc(100vh - 60px)
+  // min-height calc(100vh - var(--window-bottom))
+  min-height 100vh
+
+.borderBox
+  box-sizing border-box
 
 [v-cloak] 
   display none;

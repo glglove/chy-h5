@@ -1,27 +1,12 @@
 <style lang="less" scoped src = "">
+	uni-page-body {
+		height: 100%
+	}
 	#my {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		margin: auto;
-		.bgBox {
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			margin: 0 auto;      
-		}
+		padding-bottom: calc(var(--window-bottom));
+		background-color: rgba(255,255,255,1);
 		.contentBox {
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			margin: auto;
-			z-index: 100;			
+			
 			.top {
 				position: relative;
 				width: 686upx;
@@ -50,7 +35,7 @@
 					.contentLoginBox {
 						.btn-row {
 							.loginBtn {
-								font-size: 32upx;
+								font-size: 24upx;
 								background-color: #FA9A60
 							}
 						}
@@ -82,7 +67,6 @@
 			}
 			.containerBox {
 				width: 686upx;
-				height: 560upx;
 				border-radius: 28upx;
 				margin: 0 auto;
 				padding: 0 30upx;
@@ -113,6 +97,7 @@
 						height: 30upx;
 						margin-top: 7.5upx;
 						.tip {
+							height: 100%;
 							width: 100%;
 						}
 					}
@@ -124,13 +109,13 @@
 
 <template>
 	<container :containerLoading="containerLoading">
-		<view id="my" class="page" slot="container-slot"  @touchstart=""  @touchmove="" @touchend="">
+		<view id="my" class="page borderBox" slot="container-slot"  @touchstart=""  @touchmove="" @touchend="">
 			<!--loading组件-->
 			<!-- <Loading type="4"></Loading> -->
 
-			<view class="bgBox">
+			<!-- <view class="bgBox">
 				<image class="" :src="bg.my_bg" lazy-load="true"></image>
-			</view>
+			</view> -->
 			
 			<view class="contentBox">
 				<view class="top marginT40 u-f u-f-jsb">
@@ -173,58 +158,58 @@
 					</view>					
 				</view>
 				<view class="containerBox form">
-					<view class="itemBox line clearfix marginT10 click-able u-f u-f-jsb" @tap.stop = "clickLessons">
-						<view class="itemBox-left form_row lt">
+					<view class="itemBox line marginT5 click-able u-f-jsb u-f-ac" @tap.stop = "clickLessons">
+						<view class="u-f-ac itemBox-left">
 							<image :src="card_png" class="pic"></image>
 							<text class="tit">报名卡片</text>
 						</view>
-						<view class="itemBox-right rt">
+						<view class="itemBox-right ">
 							<image :src="forwardRight_png" layz-load="true" class="tip"></image>
 						</view>
 					</view> 
 
-					<view class="itemBox line clearfix marginT10 click-able u-f u-f-jsb" @tap.stop = "clickAchivement">
-						<view class="itemBox-left form_row lt">
+					<view class="itemBox line marginT5 click-able u-f-jsb u-f-ac" @tap.stop = "clickAchivement">
+						<view class="itemBox-left u-f-ac">
 							<image :src="achievement_png" layz-load="true" class="pic"></image>
 							<text class="tit">我的成就</text>
 						</view>
-						<view class="itemBox-right rt">
+						<view class="itemBox-right">
 							<image :src="forwardRight_png" layz-load="true" class="tip"></image>
 						</view>
 					</view> 
 
-					<view class="itemBox line clearfix marginT10 click-able u-f u-f-jsb" @tap.stop = "clickRecord">
-						<view class="itemBox-left form_row lt">
+					<view class="itemBox line marginT5 click-able u-f-jsb u-f-ac" @tap.stop = "clickRecord">
+						<view class="itemBox-left u-f-ac">
 							<image :src="record_png" layz-load="true" class="pic"></image>
 							<text class="tit">学习记录</text>
 						</view>
-						<view class="itemBox-right rt">
+						<view class="itemBox-right">
 							<image :src="forwardRight_png" layz-load="true" class="tip"></image>
 						</view>
 					</view> 
 
-					<view class="itemBox line clearfix marginT10 click-able u-f u-f-jsb" @tap.stop = "clickHelp">
-						<view class="itemBox-left form_row lt">
+					<view class="itemBox line marginT5 click-able u-f-jsb u-f-ac" @tap.stop = "clickHelp">
+						<view class="itemBox-left u-f-ac">
 							<image :src="help_png" layz-load="true" class="pic"></image>
 							<text class="tit">帮助中心</text>
 						</view>
-						<view class="itemBox-right rt">
+						<view class="itemBox-right">
 							<image :src="forwardRight_png" layz-load="true" class="tip"></image>
 						</view>
 					</view> 
 
-					<view class="itemBox line clearfix marginT10 click-able u-f u-f-jsb"  @tap.stop = "clickInvitation">
-						<view class="itemBox-left form_row lt">
+					<view class="itemBox line marginT5 click-able u-f-jsb u-f-ac"  @tap.stop = "clickInvitation">
+						<view class="itemBox-left u-f-ac">
 							<image :src="invitation_png" layz-load="true" class="pic"></image>
 							<text class="tit">邀请好友</text>
 						</view>
-						<view class="itemBox-right rt">
+						<view class="itemBox-right">
 							<image :src="require('@/static/imgs/icon/forward-right.png')" layz-load="true" class="tip"></image>
 						</view>
 					</view>                                       
 				</view>	
 				<!--引用footerCmp-->
-				<footer-explain versition="20150205" :bgcolor="'rgba(246,246,247,1)'"></footer-explain>								
+				<!-- <footer-explain versition="20150205" :bgcolor="'rgba(246,246,247,1)'"></footer-explain>								 -->
 			</view>
 			
 		</view>	
@@ -385,10 +370,12 @@
 			},
 			// 点击设置
 			clickSetBtn(){
+				debugger
 				this.navigatePage("../packageB/my/set/index")
 			},
 			// 点击报名卡片
 			clickLessons () {
+				debugger
 				this.navigatePage('../packageB/my/signUpCard/signUpCard')
 			},
 			// 
@@ -402,6 +389,7 @@
 			},
 			//帮助中心
 			clickHelp(){
+				debugger
 				this.navigatePage('../packageB/my/help/index')
 			},
 			// 邀请好友

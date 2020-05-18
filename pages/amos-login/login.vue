@@ -26,34 +26,41 @@
 				@click.native="startLogin()"
 				class="wbutton"
 			></wButton>
-			
-			<!-- 其他登录 -->
-			<view class="other_login cuIcon">
-				<view class="login_icon">
-					<view class="cuIcon-weixin" @tap="login_weixin"></view>
-				</view>
-				<view class="login_icon">
-					<view class="cuIcon-weibo" @tap="login_weibo"></view>
-				</view>
-				<view class="login_icon">
-					<view class="cuIcon-github" @tap="login_github"></view>
-				</view>
-			</view>
-			
-			<!-- 底部信息 -->
-			<view class="footer">
+
+			<view class="registerOrFind">
 				<navigator url="forget" open-type="navigate">找回密码</navigator>
 				<text>|</text>
 				<navigator url="register" open-type="navigate">注册账号</navigator>
 			</view>
+
+			
+			<!-- 其他登录 -->
+			<view class="other_login cuIcon">
+				<view class="login_icon">
+					<view class="cuIcon-weixin cuIcon" @tap="login_weixin"></view>
+				</view>
+				<view class="login_icon">
+					<view class="cuIcon-weibo cuIcon" @tap="login_weibo"></view>
+				</view>
+				<view class="login_icon">
+					<view class="cuIcon-github cuIcon" @tap="login_github"></view>
+				</view>
+			</view>
+			
+			<!-- 底部信息 -->
+			<!-- <view class="footer">
+				<navigator url="forget" open-type="navigate">找回密码</navigator>
+				<text>|</text>
+				<navigator url="register" open-type="navigate">注册账号</navigator>
+			</view> -->
 		</view>
 	</view>
 </template>
 
 <script>
 	var _this;
-	import wInput from './components/watch-login/watch-input.vue' //input
-	import wButton from './components/watch-login/watch-button.vue' //button
+	import wInput from '@/components/amos-login/watch-login/watch-input.vue' //input
+	import wButton from '@/components/amos-login/watch-login/watch-button.vue' //button
 	
 	export default {
 		data() {
@@ -96,24 +103,27 @@
 					//判断是否加载中，避免重复点击请求
 					return false;
 				}
-				if (this.phoneData.length == "") {
-				     uni.showToast({
-				        icon: 'none',
-						position: 'bottom',
-				        title: '用户名不能为空'
-				    });
-				    return;
-				}
-		        if (this.passData.length < 5) {
-		            uni.showToast({
-		                icon: 'none',
-						position: 'bottom',
-		                title: '密码不正确'
-		            });
-		            return;
-		        }
+				// if (this.phoneData.length == "") {
+				//      uni.showToast({
+				//         icon: 'none',
+				// 		position: 'bottom',
+				//         title: '用户名不能为空'
+				//     });
+				//     return;
+				// }
+		        // if (this.passData.length < 5) {
+		        //     uni.showToast({
+		        //         icon: 'none',
+				// 		position: 'bottom',
+		        //         title: '密码不正确'
+		        //     });
+		        //     return;
+		        // }
 				
-				console.log("登录成功")
+                console.log("登录成功")
+                uni.switchTab({
+                    url: '../find/find'
+                })
 				
 				_this.isRotate=true
 				setTimeout(function(){
@@ -190,6 +200,6 @@
 </script>
 
 <style>
-	@import url("./components/watch-login/css/icon.css");
+	@import url("../../components/amos-login/watch-login/css/icon.css");
 	@import url("./css/main.css");
 </style>

@@ -34,13 +34,16 @@ export const miniProApi = {
 		// console.log(this)
 		
 		//获取 系统的高后，由页面传给 container 组件
-		this.pHeight = uni.getSystemInfoSync().windowHeight
+		// this.pHeight = uni.getSystemInfoSync().windowHeight
+		this.pHeight = uni.getSystemInfoSync().screenHeight
 		// 系统的高 存入 store中
 		this.$store.dispatch('saveWindowHeight', this.pHeight)
 		// debugger
 		try {
 			if(uni.canIUse('getSystemInfoSync.return.windowHeight')){
 				const res = uni.getSystemInfoSync()
+				console.log('mixins---------------系统信息',res)
+				console.log('mixins---------------页面高度',res.screenHeight)
 				console.log('mixins---------------机型',res.model)
 				console.log('mixins---------------像素密度比',res.pixelRatio)
 				console.log('mixins---------------设备宽',res.windowWidth)
@@ -59,18 +62,7 @@ export const miniProApi = {
 		// console.log("---获取到的系统屏幕高度---------",this.pHeight)		
 		console.log('mixin onLoad')
 	},	
-	onShow() {
-		this.$bus.$on("loading", () => {
-			// console.log("minxin中 onShow 触发了 this.$bus.$on")
-			// this.loading1 = !this.loadingFlag
-			// setTimeout(()=>{
-			// 	this.loading1 = false				
-			// },2000) 
-		})			
-		//获取 系统的高后，由页面传给 container 组件
-		// this.pHeight = uni.getSystemInfoSync().windowHeight
-		// 系统的高 存入 store中
-		// this.$store.dispatch('saveWindowHeight', this.pHeight)		
+	onShow() {	
 		console.log('mixin onShow')
 	},
 	// 页面初次渲染完成
@@ -78,8 +70,6 @@ export const miniProApi = {
 		console.log('mixin onReady')
 	},
 	onHide(){
-		this.$bus.$off("loading")
-		console.log("mixin中 onHide取消了 this.$bus.$off")
 		console.log('mixin onHide')
 	},
 	onUnload (){
@@ -92,35 +82,28 @@ export const miniProApi = {
 	},
 	onReachBottom (){
 		// 上拉加载
-		debugger
-		// uni.onNetworkStatusChange(function(res){
-		// 	debugger
-		// 	console.log("网络类型:" + res.networkType + ",网络连接:" + res.isConnected);
-		// 	if(!res.isConnected){
-		// 		// 无网络
-		// 		uni.showToast({
-		// 			title:"网络未连接"
-		// 		});
-		// 		return;	
-		// 	}else {
-		// 		// 有网络
-		// 		if(this.pageSize*this.pageNum < this.total){
-		// 			this.pageNum +=1
-		// 			this.refreshPage()
-		// 		}else {
-		// 			this.toast("没有更多了~~~~")
-		// 		}					
-		// 	}		
-		// })
+		uni.onNetworkStatusChange(function(res){
+			// debugger
+			console.log("网络类型:" + res.networkType + ",网络连接:" + res.isConnected);
+			if(!res.isConnected){
+				// 无网络
+				uni.showToast({
+					title:"网络未连接"
+				});
+				return;	
+			}else {
+				// 有网络
+				// console.log("minxin 有网络")
+				// if(this.pageSize*this.pageNum < this.total){
+				// 	this.pageNum +=1
+				// 	this.refreshPage()
+				// }else {
+				// 	this.toast("没有更多了~~~~")
+				// }					
+			}		
+		})
 			
-			
-		// if(this.pageSize*this.pageNum < this.total){
-		// 	this.pageNum +=1
-		// 	this.refreshPage()
-		// }else {
-		// 	this.toast("没有更多了~~~~")
-		// }
-		// console.log('mixin onReachBottom')
+		console.log('mixin onReachBottom')
 	},
 	onShareAppMessage(){
 		console.log('mixin onShareAppMessage')
@@ -129,14 +112,11 @@ export const miniProApi = {
 		console.log('mixin onPageScroll')
 	},
 	onTabItemTap(){
-		this.$bus.$emit("loading")
-		console.log('mixin onTabItemTap 触发了 this.$bus.$emit')
 		console.log('mixin onTabItemTap')	
 	},
 	methods: {
 		// 页面中的刷新或者初始化方法，里面 调取页面中 统一自定义命名的 方法名称 叫做 refreshPage
 		mixin_refreshPage() {
-			debugger
 			this.refreshPage()
 		},
 		// 检查是否登录
