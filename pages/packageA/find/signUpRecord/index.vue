@@ -32,7 +32,7 @@
 						<view class="list-view">
 							<view class="list-item" hover-class="hover" :hover-stay-time="150" bindtap="detail">
 								<view class="content-box">
-									<image src='../../../static/images/index/logo.png' class="logo"></image>
+									<!-- <image src='../../../static/images/index/logo.png' class="logo"></image> -->
 									<view class="des-box">
 										<view class="tit">朝朝盈-2019.06.03-收益发放</view>
 										<view class="source">理财</view>
@@ -46,7 +46,7 @@
 				
 							<view class="list-item" hover-class="hover" :hover-stay-time="150" bindtap="detail">
 								<view class="content-box">
-									<image src='../../../static/images/index/logo.png' class="logo"></image>
+									<!-- <image src='../../../static/images/index/logo.png' class="logo"></image> -->
 									<view class="des-box">
 										<view class="tit">扫收钱码付款-给小短腿(2019-06.04）</view>
 										<view class="source">生活日用</view>
@@ -60,7 +60,7 @@
 				
 							<view class="list-item" hover-class="hover" :hover-stay-time="150" bindtap="detail">
 								<view class="content-box">
-									<image src='../../../static/images/index/logo.png' class="logo"></image>
+									<!-- <image src='../../../static/images/index/logo.png' class="logo"></image> -->
 									<view class="des-box">
 										<view class="tit">美团点评</view>
 										<view class="source">餐饮美食</view>
@@ -75,7 +75,7 @@
 				
 							<view class="list-item item-last" hover-class="hover" :hover-stay-time="150" bindtap="detail">
 								<view class="content-box">
-									<image src='../../../static/images/index/logo.png' class="logo"></image>
+									<!-- <image src='../../../static/images/index/logo.png' class="logo"></image> -->
 									<view class="des-box">
 										<view class="tit">工资收入</view>
 										<view class="source">工资</view>
@@ -108,7 +108,7 @@
 						<view class="list-view">
 							<view class="list-item" hover-class="hover" :hover-stay-time="150" bindtap="detail">
 								<view class="content-box">
-									<image src='../../../static/images/index/logo.png' class="logo"></image>
+									<!-- <image src='../../../static/images/index/logo.png' class="logo"></image> -->
 									<view class="des-box">
 										<view class="tit">朝朝盈-2019.06.03-收益发放</view>
 										<view class="source">理财</view>
@@ -122,7 +122,7 @@
 				
 							<view class="list-item" hover-class="hover" :hover-stay-time="150" bindtap="detail">
 								<view class="content-box">
-									<image src='../../../static/images/index/logo.png' class="logo"></image>
+									<!-- <image src='../../../static/images/index/logo.png' class="logo"></image> -->
 									<view class="des-box">
 										<view class="tit">扫收钱码付款-给小短腿</view>
 										<view class="source">生活日用</view>
@@ -136,7 +136,7 @@
 				
 							<view class="list-item" hover-class="hover" :hover-stay-time="150" bindtap="detail">
 								<view class="content-box">
-									<image src='../../../static/images/index/logo.png' class="logo"></image>
+									<!-- <image src='../../../static/images/index/logo.png' class="logo"></image> -->
 									<view class="des-box">
 										<view class="tit">美团点评</view>
 										<view class="source">餐饮美食</view>
@@ -151,7 +151,7 @@
 				
 							<view class="list-item item-last" hover-class="hover" :hover-stay-time="150" bindtap="detail">
 								<view class="content-box">
-									<image src='../../../static/images/index/logo.png' class="logo"></image>
+									<!-- <image src='../../../static/images/index/logo.png' class="logo"></image> -->
 									<view class="des-box">
 										<view class="tit">工资收入</view>
 										<view class="source">工资</view>
@@ -184,7 +184,7 @@
 						<view class="list-view">
 							<view class="list-item" hover-class="hover" :hover-stay-time="150" bindtap="detail">
 								<view class="content-box">
-									<image src='../../../static/images/index/logo.png' class="logo"></image>
+									<!-- <image src='../../../static/images/index/logo.png' class="logo"></image> -->
 									<view class="des-box">
 										<view class="tit">朝朝盈-2019.06.03-收益发放</view>
 										<view class="source">理财</view>
@@ -198,7 +198,7 @@
 				
 							<view class="list-item" hover-class="hover" :hover-stay-time="150" bindtap="detail">
 								<view class="content-box">
-									<image src='../../../static/images/index/logo.png' class="logo"></image>
+									<!-- <image src='../../../static/images/index/logo.png' class="logo"></image> -->
 									<view class="des-box">
 										<view class="tit">扫收钱码付款-给小短腿</view>
 										<view class="source">生活日用</view>
@@ -212,7 +212,7 @@
 				
 							<view class="list-item" hover-class="hover" :hover-stay-time="150" bindtap="detail">
 								<view class="content-box">
-									<image src='../../../static/images/index/logo.png' class="logo"></image>
+									<!-- <image src='../../../static/images/index/logo.png' class="logo"></image> -->
 									<view class="des-box">
 										<view class="tit">美团点评</view>
 										<view class="source">餐饮美食</view>
@@ -225,7 +225,7 @@
 							</view>
 							<view class="list-item" hover-class="hover" :hover-stay-time="150" bindtap="detail">
 								<view class="content-box">
-									<image src='../../../static/images/index/logo.png' class="logo"></image>
+									<!-- <image src='../../../static/images/index/logo.png' class="logo"></image> -->
 									<view class="des-box">
 										<view class="tit">美团点评</view>
 										<view class="source">餐饮美食</view>
@@ -238,7 +238,7 @@
 							</view>
 							<view class="list-item" hover-class="hover" :hover-stay-time="150" bindtap="detail">
 								<view class="content-box">
-									<image src='../../../static/images/index/logo.png' class="logo"></image>
+									<!-- <image src='../../../static/images/index/logo.png' class="logo"></image> -->
 									<view class="des-box">
 										<view class="tit">美团点评</view>
 										<view class="source">餐饮美食</view>
@@ -251,7 +251,7 @@
 							</view>
 							<view class="list-item" hover-class="hover" :hover-stay-time="150" bindtap="detail">
 								<view class="content-box">
-									<image src='../../../static/images/index/logo.png' class="logo"></image>
+									<!-- <image src='../../../static/images/index/logo.png' class="logo"></image> -->
 									<view class="des-box">
 										<view class="tit">美团点评</view>
 										<view class="source">餐饮美食</view>
@@ -264,7 +264,7 @@
 							</view>
 							<view class="list-item" hover-class="hover" :hover-stay-time="150" bindtap="detail">
 								<view class="content-box">
-									<image src='../../../static/images/index/logo.png' class="logo"></image>
+									<!-- <image src='../../../static/images/index/logo.png' class="logo"></image> -->
 									<view class="des-box">
 										<view class="tit">美团点评</view>
 										<view class="source">餐饮美食</view>
@@ -279,7 +279,7 @@
 				
 							<view class="list-item item-last" hover-class="hover" :hover-stay-time="150" bindtap="detail">
 								<view class="content-box">
-									<image src='../../../static/images/index/logo.png' class="logo"></image>
+									<!-- <image src='../../../static/images/index/logo.png' class="logo"></image> -->
 									<view class="des-box">
 										<view class="tit">工资收入</view>
 										<view class="source">工资</view>

@@ -221,6 +221,7 @@
 </template>
 
 <script>
+	import uActionSheet from "uview-ui/components/u-action-sheet/u-action-sheet.vue";
 	import photoPng from '@/static/imgs/icon/photo.png'
 	import setPng from '@/static/imgs/icon/set.png'
 	import cardPng from '@/static/imgs/icon/card.png'
@@ -244,6 +245,7 @@
 		mixins: [ miniProApi ],
         components: {
 			// FooterExplain
+			uActionSheet
         },	
 		computed: {
 			...mapGetters(['hasLogin', 'forcedLogin','userToken','userAvatarUrl','userInfo']),
