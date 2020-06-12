@@ -110,6 +110,10 @@
 <template>
 	<container :containerLoading="containerLoading">
 		<view id="my" class="page borderBox" slot="container-slot"  @touchstart=""  @touchmove="" @touchend="">
+			<view class="u-main-color">
+				测试
+			</view>
+			<u-action-sheet :list="list" v-model="show"></u-action-sheet>		
 			<!--loading组件-->
 			<!-- <Loading type="4"></Loading> -->
 
@@ -265,12 +269,23 @@
 				invitation_png: invitationPng,
 				pHeight: 0, 
 				startY: 0, 
-				scrollTop_refresh: 0, // 滑动的距离				
+				scrollTop_refresh: 0, // 滑动的距离	
+				list: [{
+					text: '点赞',
+					color: 'blue',
+					fontSize: 28
+				}, {
+					text: '分享'
+				}, {
+					text: '评论'
+				}],
+				show: true							
 			}
 		},
 
 		onLoad() {
 			this.avaterPic = this.getAvaterPic()
+			console.log("--------------",this.$u)
 		},
 		onShow() {
 			
