@@ -3,6 +3,7 @@ import App from './App'
 import uView from "uview-ui" // 引入 uview-ui
 Vue.use(uView)
 import store from './store' // vuex状态管理
+import './icons' // 引入 svg 字体图标
 import configs from '@/api/config.js'
 
 

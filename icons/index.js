@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import IconSvg from '../components/common/Icon-svg/index.vue'// svg组件
-import generateIconsView from '../components/common/svg-icons/generateIconsView.js'// just for views/icons , you can delete it
+import IconSvg from '../components/Icon-svg/index.vue'// svg组件
+import generateIconsView from '../components/svg-icons/generateIconsView.js'// just for views/icons , you can delete it
 // register globally
 
 Vue.component('icon-svg', IconSvg)
