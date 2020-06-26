@@ -1,13 +1,17 @@
 <template>
   <div class="icons-container">
     <div class="icons-wrapper">
-      <div v-for='item in iconsMap' :key='item' class='icon-item' @click='handleClipboard(generateIconCode(item),$event)'>
-        <el-tooltip placement="top" effect="light">
+      <div 
+        v-for='item in iconsMap' 
+        :key='item' 
+        class='icon-item' 
+        @click='handleClipboard(generateIconCode(item),$event)'>
+        <!-- <el-tooltip placement="top" effect="light"> -->
           <div slot="content">
             {{generateIconCode(item)}}
           </div>
           <icon-svg :icon-class="item" />
-        </el-tooltip>
+        <!-- </el-tooltip> -->
         <span>{{item}}</span>
       </div>
     </div>
@@ -45,7 +49,7 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus">
 .icons-container
-  margin 40px 20px 0
+  margin 80upx 40upx 0
   overflow hidden
   .icons-wrapper
     margin 0 auto

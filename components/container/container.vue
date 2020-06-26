@@ -25,7 +25,6 @@
 		}
 		.container {
 			position: relative;
-			// overflow: hidden;
 			box-sizing: border-box;
 			opacity: 0;
 		}
@@ -36,8 +35,8 @@
 			right: 0;
 			bottom: 0;
 			z-index: 999;
-			opacity: 0.82;
-			background: rgba(0, 0, 0, .75);			
+			opacity: 0.5;
+			background: rgba(0, 0, 0, .1);			
 		}
 		.container_allLoading {
 			position: fixed;
@@ -53,7 +52,12 @@
 			text-align: center;		
 			.allLoadingPic {
 				width: 100%;
+				height: 100%;
 				// animation: container_loading .2s ease 0;
+				img {
+					width: 100%;
+					height: 100%;
+				}
 			}
 		}		
 		.container_loading {
@@ -69,11 +73,26 @@
 			z-index: 1001;
 			text-align: center;		
 			.loadingPic {
+				width: 100%;
+				height: 100%;
 				// animation: container_loading .2s ease 0;
 			}
 		}
-		.container_authorize {
+		.container-loading-uloading {
 			position: fixed;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			margin: auto;
+			// background-color:rgba(146, 135, 135, 0.03);
+			color: #000000;
+			.txt {
+				font-size: 26upx;
+			}	
+		}
+		.container_authorize {
+			position: fixed;	
 			top: 0;
 			left: 0;
 			right: 0;
@@ -87,15 +106,22 @@
 </style>
 <template>
 	<view class="container-box-cmp animated fadeIn fast">
-	<!--<view class="top-loadding {{topClass}}" style="{{topViewStyle}}" hidden="{{refreshTop==0&&!refreshFlag}}">
+		<!--<view class="top-loadding {{topClass}}" style="{{topViewStyle}}" hidden="{{refreshTop==0&&!refreshFlag}}">
 			<text class="iconfont mykicon-d_loading_icon"></text>
 		</view> -->
-		
+		<!-- containerAllloading: {{containerAllloading}} -->
 		<!--page页面部分-->
-		<view class="container" :style="positionStyle" @touchstart=""  @touchmove="" @touchend="">
-			<slot name="container-slot"></slot>
-		</view>
+		<transition name="move">
+			<view class="container" :style="positionStyle" @touchstart=""  @touchmove="" @touchend="">
+				<slot name="container-slot"></slot>
+				<u-toast ref="uToast"></u-toast>
+				<u-top-tips ref="uTips" :navbar-height="statusBarHeight + navbarHeight"></u-top-tips>		
+			</view>
+		</transition>
+
+		<!-------->
 		
+
 		<!---loadingMore 区域-->
 		<!--<view class="container-bottom-loading"  v-if="more!='false'&&!showLoadingFlag" style="opacity:more!='false'&&!showLoadingFlag ? '1':'0'">
 			<image src="../../assets/imgs/loading2.svg" v-show="nomore=='false'"/>
@@ -105,20 +131,28 @@
 		
 		<!-- common mask 遮挡层-->
 		<!-- containerMaskFlag: {{containerMaskFlag}} -->
-		<!--<view :class="['container_mask', aniClass1]" @tap="handleMaskTap" v-show="containerMaskFlag"></view> -->
+		<view :class="['container_mask', aniClass1]" @tap="handleMaskTap" v-show="containerAllloading"></view>
 
 		<!-- allLoading（全屏的loading层）-->
-		<!-- <view :class="['container_allLoading', aniClass]" v-show="containerAllloadingFlag"> -->
 		<view :class="['container_allLoading', aniClass]" v-show="containerAllloading">
-			<image class="allLoadingPic" :src="require('@/static/allLoading.gif')" layz-load="true"></image>
+			<image class="allLoadingPic" :src="require('@/static/allLoading.gif')"></image>
 		</view>	
+		<!-- <view class="container-loading-uloading u-f-ajc u-f-column" v-show="containerAllloading">
+			<u-loading 
+				:show="containerAllloading" 
+				size="48" 
+				mode="flower"
+			></u-loading>
+			<span class="u-m-l-10 txt u-m-t-10">努力加载中...</span>
+		</view>		 -->
 		
 		<!-- loading (请求loading层)-->
 		<!-- loading1: {{loading1}} -->
 		<!-- <view :class="['container_loading', aniClass]" v-show="containerLoadingFlag"> -->
-		<view :class="['container_loading', aniClass]" v-show="containerLoading">
-			<image class="loadingPic" :src="require('@/static/loading.gif')" layz-load="true"></image>
+		<view :class="['container_loading', aniClass]" v-show="false">
+			<image class="loadingPic" :src="require('@/static/loading.gif')"></image>
 		</view>	
+
 			
 		<!--authorize 授权区域(层级最高)------>
 		<!-- isAuthorize: {{JSON.stringify(isAuthorize)}} -->
@@ -170,7 +204,7 @@
 			containerAllloading: {
 				type: Boolean,
 				default: false
-			}
+			},
 			// more: {
 			// 	type: String,
 			// 	default: 'false'
@@ -228,7 +262,7 @@
 						padding-left:${this.left}px;
 						padding-right:${this.right}px;
 						min-height:${this.pHeight}px;
-						opacity:${this.containerAllloadingFlag?0:1}`				
+						opacity:${this.containerAllloading?0:1}`				
 			}
 			// 小程序上面 自动检测 是否有授权
 			// #ifdef MP-WEIXIN
@@ -241,7 +275,7 @@
 			//#endif
 		},
 		watch: {
-			containerLoadingFlag: {
+			containerAllloading: {
 				handler(newValue, oldValue){
 					if(newValue){
 						this.aniClass = 'animated fast fadeIn'
@@ -270,6 +304,8 @@
 				// containerLoadingFlag: false,  // 控制container 的全屏loading状态
 				aniClass: 'animated fast fadeIn',  // container 的全屏loading 动画class
 				aniClass1: 'animated fast fadeIn', // mask 的动画class
+				statusBarHeight: uni.getSystemInfoSync().statusBarHeight,// 状态栏高度，H5中，此值为0，因为H5不可操作状态栏
+				navbarHeight: 44 // 导航栏内容区域高度，不包括状态栏高度在内
 			}
 		},
 		methods:{					
@@ -326,16 +362,26 @@
    //                  };
    //                  toTick();
    //              }
-			// },		
+			// },	
+			showTips(tit, type = 'warning', duration="2500"){
+				this.$refs.uTips.show({
+					title: tit,
+					type: type,
+					duration: duration
+				})
+			},
 			// 点击遮罩
 			handleMaskTap() {
 				debugger
 				console.log("点击了遮罩")
 				// 触发 
 				console.log(this)
-				if( this.containerMaskFlag ) {
-					debugger
-					this.setContainerMaskFlag(false)
+				// if( this.containerMaskFlag ) {
+				// 	debugger
+				// 	this.setContainerMaskFlag(false)
+				// }
+				if(this.containerAllloading){
+					this.containerAllloading = false
 				}
 			},
 			// 获取小程序 是否授权userInfo

@@ -4,25 +4,42 @@ import commApi from '@/api/comm.js'
 // import { debug } from 'utils';
 import { getDeviceApi } from '@/utils/deviceApi.js'
 import getEnterType from '@/utils/miniProSceneType.js'
+	// 引入mescroll-mixins.js
+import MescrollMixin from "@/components/mescroll-uni/components/mescroll-uni/mescroll-mixins.js"
 import {mapGetters} from 'vuex' 
+import { REQ_OK } from '@/api/config'
+import * as filters from '@/utils/filter' // 引入过滤器
 
-// 小程序页面跳转
+
+// 页面共有mixin
 export const miniProApi = {
+	mixins: [MescrollMixin],  // 引入mescrollMixin
 	components:{
 		
 	},
 	data () {
 		return {
+			REQ_OK: REQ_OK,
 			pHeight: 0, // container 组件的 高，从系统中获取
-			containerAllloading: false,
-			containerLoading: false,  
+			showEmptyPage: false, // 是否显示empty页面
+			emptyType: 'data', //car 、page、search、address、wifi、order、coupon、favor、permission、history、news、message、list、data
+			emptyText: '暂无数据', // empty页面显示的文字
+			showEmptyPageBtn: true, // empty页面是否显示操作按钮
+			showBtnType: 1, // 1 是返回按钮 2 是重新刷新按钮
+			showBtnStyle: {'backgroundColor': 'rgba(41,121,255,1)','color':'rgb(255,255,255)' }, // empty页面操作按钮的样式（背景和样式）
+			containerAllloading: false,  // 全屏的loading
+			containerLoading: false,  // 加载的loading
 			loadingMoreShow: false, // 控制 loadingMore 组件的显示/隐藏
-			total: 0, // 总页数
-			pageSize: 10, // 每页数目
-			pageNum: 1,  // 页码
-			clientid: '', // 设备的 cid 用户 app-plus 登录成功后客户端获取到的cid 发送给 后台和用户账号进行绑定用户 给指定用户下发推送
+			// total: 0, // 总页数
+			// pageSize: 80, // 每页数目
+			// pageNum: 1,  // 页码
+			clientid: '', // 设备的 cid 用户 app-plus 登录成功后客户端获取到的cid 发送给 后台和用户账号进行绑定用户 给指定用户下发推送			
+			mescroll: null, //mescroll实例对象 (此行可删,mixins已默认)		
 		}
 	},
+	filters: {
+        ...filters
+    },
 	computed: {
 		...mapGetters(['userToken'])
 	},
@@ -34,8 +51,8 @@ export const miniProApi = {
 		// console.log(this)
 		
 		//获取 系统的高后，由页面传给 container 组件
-		// this.pHeight = uni.getSystemInfoSync().windowHeight
-		this.pHeight = uni.getSystemInfoSync().screenHeight
+		this.pHeight = uni.getSystemInfoSync().windowHeight
+		// this.pHeight = uni.getSystemInfoSync().screenHeight
 		// 系统的高 存入 store中
 		this.$store.dispatch('saveWindowHeight', this.pHeight)
 		// debugger
@@ -117,8 +134,116 @@ export const miniProApi = {
 	methods: {
 		// 页面中的刷新或者初始化方法，里面 调取页面中 统一自定义命名的 方法名称 叫做 refreshPage
 		mixin_refreshPage() {
+			// 调用页面中的统一的刷新方法  refreshPage()
 			this.refreshPage()
 		},
+		mixin_down_refreshPage(page, mescroll){
+			// 调用页面中的统一的下拉刷新方法  downRefreshPage()
+			this.downRefreshPage(page, mescroll)
+		},
+		mixin_up_refreshPage(page, mescroll){
+			// 调用页面中的统一的上拉刷新方法  upRefreshPage()
+			this.upRefreshPage(page, this.mescroll)	
+		},
+		/*mescroll组件初始化的回调,可获取到mescroll对象 (此处可删,mixins已默认)*/
+		mescrollInit(mescroll) {
+			debugger
+			this.mescroll = mescroll;
+		},				
+		/*mescroll下拉刷新的回调, 有三种处理方式:*/
+		downCallback(page){
+			debugger
+			// 第1种: 请求具体接口
+			// uni.request({
+			// 	url: 'xxxx',
+			// 	success: () => {
+			// 		// 请求成功,隐藏加载状态
+			// 		this.mescroll.endSuccess()
+			// 	},
+			// 	fail: () => {
+			// 		// 请求失败,隐藏加载状态
+			// 		// this.mescroll.endErr()
+			// 	}
+			// })
+			// 第2种: 下拉刷新和上拉加载调同样的接口, 那么不用第1种方式, 直接mescroll.resetUpScroll()即可
+			// this.mescroll.resetUpScroll(); // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
+			// 第3种: 下拉刷新什么也不处理, 可直接调用或者延时一会调用 mescroll.endSuccess() 结束即可
+			// this.mescroll.endSuccess()
+			// 若整个downCallback方法仅调用this.mescroll.resetUpScroll(),则downCallback方法可删 (mixins已默认,大部分都是这个情况~)
+
+			this.mixin_down_refreshPage(page, this.mescroll)
+		},		
+		/*mesroll上拉加载的回调*/
+		upCallback(page) {
+			debugger
+			// console.log(this.upOption.page)
+			// let pageNum = page.num; // 页码, 默认从1开始
+			// let pageSize = page.size; // 页长, 默认每页10条
+			// uni.request({
+			// 	url: 'xxxx?pageNum='+pageNum+'&pageSize='+pageSize,
+			// 	success: (data) => {
+			// 		// 接口返回的当前页数据列表 (数组)
+			// 		let curPageData = data.xxx; 
+			// 		// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+			// 		let curPageLen = curPageData.length; 
+			// 		// 接口返回的总页数 (如列表有26个数据,每页10条,共3页; 则totalPage=3)
+			// 		let totalPage = data.xxx; 
+			// 		// 接口返回的总数据量(如列表有26个数据,每页10条,共3页; 则totalSize=26)
+			// 		let totalSize = data.xxx; 
+			// 		// 接口返回的是否有下一页 (true/false)
+			// 		let hasNext = data.xxx; 
+					
+			// 		//设置列表数据
+			// 		if(page.num == 1) this.dataList = []; //如果是第一页需手动置空列表
+			// 		this.dataList = this.dataList.concat(curPageData); //追加新数据
+					
+			// 		// 请求成功,隐藏加载状态
+			// 		//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+			// 		this.mescroll.endByPage(curPageLen, totalPage); 
+					
+			// 		//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+			// 		//this.mescroll.endBySize(curPageLen, totalSize); 
+					
+			// 		//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+			// 		//this.mescroll.endSuccess(curPageLen, hasNext); 
+					
+			// 		//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+			// 		//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+			// 		//如果传了hasNext,则翻到第二页即可显示无更多数据.
+			// 		//this.mescroll.endSuccess(curPageLen);
+					
+			// 		// 如果数据较复杂,可等到渲染完成之后再隐藏下拉加载状态: 如
+			// 		// 建议使用setTimeout,因为this.$nextTick某些情况某些机型不触发
+			// 		setTimeout(()=>{
+			// 			this.mescroll.endSuccess(curPageLen)
+			// 		},20)
+					
+			// 		//curPageLen必传的原因:
+			// 		// 1. 使配置的noMoreSize 和 empty生效
+			// 		// 2. 判断是否有下一页的首要依据: 
+			// 			// 当传的值小于page.size时(说明不满页了),则一定会认为无更多数据;
+			// 			// 比传入的totalPage, totalSize, hasNext具有更高的判断优先级;
+			// 		// 3. 当传的值等于page.size时(满页),才取totalPage, totalSize, hasNext判断是否有下一页
+			// 		// 传totalPage, totalSize, hasNext目的是避免方法四描述的小问题
+					
+			// 		// 提示: 您无需额外维护页码和判断显示空布局,mescroll已自动处理好.
+			// 		// 当您发现结果和预期不一样时, 建议再认真检查以上参数是否传正确
+			// 	},
+			// 	fail: () => {
+			// 		//  请求失败,隐藏加载状态
+			// 		this.mescroll.endErr()
+			// 	}
+			// })
+
+
+			this.mixin_up_refreshPage(page, this.mescroll)					
+		},	
+		// 返回上级页面 
+		backPage(num = 1){
+			this.getDeviceApi().navigateBack({
+				delta: num
+			})
+		},			
 		// 检查是否登录
 		getLoginStatus () {
 			return new Promise((resolve, reject) => {
@@ -132,6 +257,49 @@ export const miniProApi = {
 				  resolve(false);
 				}				
 			})
+		},
+		// 封装的页面跳转带参数的
+		togoPage(url, data, togoType = 'navigate'){
+			// url 为不带参数的链接， togoType为跳转的方式：navigate,switch,redirect,relaunch
+			// data 为 传递的参数对象
+			function param (data) {
+				let urlParams = ''
+				for (var k in data) {
+				  let value = data[k] !== undefined ? data[k] : ''
+				  urlParams += '&' + k + '=' + encodeURIComponent(JSON.stringify(value))
+				}
+				return urlParams ? urlParams.substring(1) : ''
+			}
+
+			url += (url.indexOf('?') < 0 ? '?' : '&') + param(data)
+	
+			debugger
+			switch(togoType){
+				case 'navigate':
+					uni.navigateTo({  
+						url
+					}) 
+				break
+				case 'switch':
+					uni.switchTab({  
+						url
+					}) 
+				break
+				case 'redirect':
+					uni.redirectTo({  
+						url
+					}) 
+				break
+				case 'relaunch':
+					uni.reLaunch({  
+						url
+					}) 
+				break	
+				default: 
+					uni.navigateTo({  
+						url
+					}) 																
+			}		
 		},		
 		// 页面跳转
 		navigatePage ( url ) {
@@ -192,13 +360,16 @@ export const miniProApi = {
 		getDeviceApi: getDeviceApi,	
 		
 		// 开启loading
-		showLoading(title, duration = 2000) {
+		showLoading(title, mask = false, duration ) {
 			this.getDeviceApi().showLoading({
 				title: title || '加载中',
+				mask: mask,
+
 			})
 			if (duration > 0) {
 				return new Promise((resolve, reject) => {
 					setTimeout(() => {
+						uni.hideLoading()
 						resolve();
 					}, duration);
 				});
@@ -305,7 +476,7 @@ export const miniProApi = {
 			let _this = this;
 			this.getDeviceApi().showToast({
 				title: title,
-				image: '../static/imgs/icon/error.png',
+				image: require('@/static/imgs/icon/error.png'),
 				mask: true,
 				duration: duration
 			});

@@ -4,14 +4,10 @@ const miniproConfings = {
     version: 'v20190805', // 小程序版本号
   }
 
-// // 请求成功
-// export const REQ_Ok = 1
-// // 请求失败
-// export const REQ_ERR = 0
-
  const urls = {
 	//生产
-		gateway: "http://192.168.1.104:5000",  // 
+		// gateway: "http://192.168.1.104:5000",  // 
+		gateway: "https://www.caihuiyun.cn",  // 
 		// gateway: "http://192.168.1.105:5000",  // 公司电脑
 		// gateway: "https://www.gaolongweb.cn",    // 这个为本机的ip 地址 端口号 设置的是 5000  主要是 app-plus 进行真机调试时 用 http://localhost:5000 调取接口时会请求失败
 		// gateway: "https://47.105.141.184",    // 这个为本机的ip 地址 端口号 设置的是 5000  主要是 app-plus 进行真机调试时 用 http://localhost:5000 调取接口时会请求失败
@@ -19,7 +15,7 @@ const miniproConfings = {
 	//  mobile: "https://www.kaoyandaka.com",
 	//  resource: "https://www.kaoyandaka.com",
 	//  activityRoot: "https://www.kaoyandaka.com", // /marketing/activity?parentShopId=288920&activityId=2990977b-e7b0-43b8-915d-7985b2c042bb"
-		pic_bg_Url: "https://www.kaoyandaka.com",
+		  pic_bg_Url: "https://www.kaoyandaka.com",
         wsUrl: "ws://127.0.0.1:5000",   // socket 本地服务器地址
 		// wsUrl: "wss://www.gaolongweb.cn",   // socket 生产环境服务器地址
  }

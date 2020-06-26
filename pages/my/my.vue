@@ -1,226 +1,153 @@
-<style lang="less" scoped src = "">
+<style lang="scss" scoped src = "">
 	uni-page-body {
 		height: 100%
 	}
 	#my {
 		padding-bottom: calc(var(--window-bottom));
-		background-color: rgba(255,255,255,1);
-		.contentBox {
-			
-			.top {
-				position: relative;
-				width: 686upx;
-				height: 108upx;
-				line-height: 108upx;
-				margin: 40upx auto;
-				.leftInfoBox {
-					.avatarBox {
-						.photo {
-							width: 108upx;
-							height: 108upx;
-							border-radius: 50%;
-							vertical-align: middle;
-						}
-						.name {
-							display: inline-block;
-							height: 48upx;
-							margin-left: 25upx;
-							line-height: 48upx;
-							text-align: center;
-							font-size: 34upx;
-							color: #FFFFFF;
-							letter-spacing: 0.59upx;
-						}	
-					}
-					.contentLoginBox {
-						.btn-row {
-							.loginBtn {
-								font-size: 24upx;
-								background-color: #FA9A60
-							}
-						}
-					}						
-				}
-				.setBtnBox {
-					.set {
-						position: relative;
-						width: 50upx;
-						height: 50upx;  
-						margin: 32upx 0;
-						image.set {
-						  position: absolute;
-						  top: -30upx;
-						  left: 0;  
-						  z-index: 1001;
-						}
-						.btn {
-							position: absolute;
-							width: 100%;
-							height: 100%;
-							padding: 0 !important;
-							line-height: 0 !important;
-							background-color: transparent !important; 
-							z-index: 1002;
-						}            
-					}
-				}							
-			}
-			.containerBox {
-				width: 686upx;
-				border-radius: 28upx;
-				margin: 0 auto;
-				padding: 0 30upx;
-				background: #FFFFFF;
-				border: 1px solid rgba(250, 235, 228, 0.2);
-				box-shadow: 0 12px 10px rgba(252,195,165,0.2);
-				box-sizing: border-box; 
-				.itemBox {
-					height: 100upx;
-					line-height: 100upx;
-					.itemBox-left {
-						margin: 26upx 0;
-						.pic {
-							width: 48upx;
-							height: 45upx;
-						}
-						.tit {
-							height: 42upx;
-							line-height: 42upx;
-							color: #000000;
-							font-size: 30upx;
-							letter-spacing: 0.46upx;
-							margin-left: 30upx;
-						}
-					}
-					.itemBox-right {
-						width: 15upx;
-						height: 30upx;
-						margin-top: 7.5upx;
-						.tip {
-							height: 100%;
-							width: 100%;
-						}
-					}
-				}  
-			}
+		// background-color: rgba(255,255,255,1);
+		background-color: rgba(245,245,245,1);
+	}
+	.slot-wrap {
+		display: flex;
+		align-items: center;
+		/* 如果您想让slot内容占满整个导航栏的宽度 */
+		/* flex: 1; */
+		/* 如果您想让slot内容与导航栏左右有空隙 */
+		/* padding: 0 30rpx; */
+	}	
+	.camera {
+		width: 108upx;
+		height: 88upx;
+		
+		&:active{
+			background-color: #ededed;
+		}		
+	}
+	.user-box {
+		background-color: #ffffff
+	}
+	.icon-myCard {
+		color: red
+	}
+	.itemBox {
+		background-color: #ffffff;
+		padding: 20upx 32upx;
+		.leftBox {
+			// width: 200upx
+		}
+		.rightBox {
+			// width: 200upx
 		}
 	}
 </style>
 
 <template>
 	<container :containerLoading="containerLoading">
-		<view id="my" class="page borderBox" slot="container-slot"  @touchstart=""  @touchmove="" @touchend="">
-			<view class="u-main-color">
-				测试
-			</view>
-			<u-action-sheet :list="list" v-model="show"></u-action-sheet>		
-			<!--loading组件-->
-			<!-- <Loading type="4"></Loading> -->
-
-			<!-- <view class="bgBox">
-				<image class="" :src="bg.my_bg" lazy-load="true"></image>
-			</view> -->
-			
-			<view class="contentBox">
-				<view class="top marginT40 u-f u-f-jsb">
-					<!-- photo_png: {{photo_png}}
-					set_png: {{set_png}} -->
-					<!--头像、姓名区域-->
-					<view class="leftInfoBox u-f-ajc">
-						<view class="avatarBox u-f-ac">
-							<image class="photo" :src="photo_png" layz-load="true"></image>
-							<text class="name">{{name? name:''}}</text>
-						</view>
-													
-						
-						<!--登陆/退出登陆-->
-						<!--#ifdef H5 || APP-PLUS-->
-						<view class="contentLoginBox">
-							<view class="btn-row">
-								<button class="loginBtn" v-if="!userToken" type="primary"  @tap="bindLogin">{{userToken?'已登陆': '您还未登录'}}</button>
-								<button class="loginBtn" v-if="userToken" type="default" @tap="loginOut">退出登录</button>
-							</view>
-						</view>
-						<!--#endif-->
+		<view id="my" class="page borderBox" slot="container-slot">
+			<u-navbar :is-back="false" title="我的" :border-bottom="false">
+				<view class="u-f u-f-jfd" style="width: 100%;">
+					<view class="camera u-f u-row-center">
+						<u-icon name="camera-fill" color="#000000" size="48"></u-icon>
 					</view>
-					
-					<!--设置区域-->
-					<view class="setBtnBox">
-						<!--#ifdef MP-WEIXIN-->
-						<form id="setFormBox"  class="set rt click-able" report-submit="true" bindsubmit="formSubmit">
-							<image class="set click-able" :src="set_png" layz-load="true" @tap.stop = "clickSetBtn"></image>
-							<button form-type="submit" class="btn click-able"></button>
-						</form>
-						<!--#endif-->
-						
-						<!--#ifdef H5 || APP-PLUS-->
-						<span class="setBtn">
-							<image class="set click-able" :src="set_png" layz-load="true" @tap.stop = "clickSetBtn"></image>
-							<button form-type="submit" class="btn click-able"></button>						
-						</span>
-						<!--#endif-->
-					</view>					
 				</view>
-				<view class="containerBox form">
-					<view class="itemBox line marginT5 click-able u-f-jsb u-f-ac" @tap.stop = "clickLessons">
-						<view class="u-f-ac itemBox-left">
-							<image :src="card_png" class="pic"></image>
-							<text class="tit">报名卡片</text>
-						</view>
-						<view class="itemBox-right ">
-							<image :src="forwardRight_png" layz-load="true" class="tip"></image>
-						</view>
-					</view> 
-
-					<view class="itemBox line marginT5 click-able u-f-jsb u-f-ac" @tap.stop = "clickAchivement">
-						<view class="itemBox-left u-f-ac">
-							<image :src="achievement_png" layz-load="true" class="pic"></image>
-							<text class="tit">我的成就</text>
-						</view>
-						<view class="itemBox-right">
-							<image :src="forwardRight_png" layz-load="true" class="tip"></image>
-						</view>
-					</view> 
-
-					<view class="itemBox line marginT5 click-able u-f-jsb u-f-ac" @tap.stop = "clickRecord">
-						<view class="itemBox-left u-f-ac">
-							<image :src="record_png" layz-load="true" class="pic"></image>
-							<text class="tit">学习记录</text>
-						</view>
-						<view class="itemBox-right">
-							<image :src="forwardRight_png" layz-load="true" class="tip"></image>
-						</view>
-					</view> 
-
-					<view class="itemBox line marginT5 click-able u-f-jsb u-f-ac" @tap.stop = "clickHelp">
-						<view class="itemBox-left u-f-ac">
-							<image :src="help_png" layz-load="true" class="pic"></image>
-							<text class="tit">帮助中心</text>
-						</view>
-						<view class="itemBox-right">
-							<image :src="forwardRight_png" layz-load="true" class="tip"></image>
-						</view>
-					</view> 
-
-					<view class="itemBox line marginT5 click-able u-f-jsb u-f-ac"  @tap.stop = "clickInvitation">
-						<view class="itemBox-left u-f-ac">
-							<image :src="invitation_png" layz-load="true" class="pic"></image>
-							<text class="tit">邀请好友</text>
-						</view>
-						<view class="itemBox-right">
-							<image :src="require('@/static/imgs/icon/forward-right.png')" layz-load="true" class="tip"></image>
-						</view>
-					</view>                                       
-				</view>	
-				<!--引用footerCmp-->
-				<!-- <footer-explain versition="20150205" :bgcolor="'rgba(246,246,247,1)'"></footer-explain>								 -->
+			</u-navbar>
+			
+			<view class="u-f-ac user-box u-p-l-30 u-p-r-20 u-m-t-20">
+				<view class="u-m-r-10 u-f-ac">
+					<u-avatar :src="pic" size="140"></u-avatar>
+				</view>
+				<view class="u-flex-1 u-m-l-20">
+					<view class="u-font-18">{{user.name}}</view>
+					<view class="u-font-14 u-tips-color">企信号:{{user.empNo}}</view>
+				</view>
+				<view class="u-m-l-10 u-p-10">
+					<u-icon name="scan" color="#969799" size="28"></u-icon>
+				</view>
+				<view class="u-m-l-10 u-p-10">
+					<u-icon name="arrow-right" color="#969799" size="28"></u-icon>
+				</view>
 			</view>
 			
+			<!-- <u-cell-group class="u-m-t-20">
+				<u-cell-item  title="我的名片">
+					<u-icon slot="icon" size="32" color="red" name="coupon" class="icon-myCard"></u-icon>
+				</u-cell-item>
+			</u-cell-group> -->
+
+			<view class="u-f-jsb u-p-l-32 u-p-r-32 itemBox click-able line u-m-t-20">
+				<view class="leftBox u-f u-f-jc">
+					<u-icon name="coupon" size="28" color="red"></u-icon>
+					<view class="marginL5 u-f-ajc">我的名片</view>
+				</view>
+				<view class="rightBox">
+					<u-icon name="arrow-right" color="#969799" size="28"></u-icon>
+				</view>
+			</view>		
+
+			<view class="u-f-jsb u-p-l-32 u-p-r-32 itemBox line click-able">
+				<view class="leftBox u-f u-f-jc">
+					<u-icon name="coupon" size="28" color="red"></u-icon>
+					<view class="marginL5 u-f-ajc">红包</view>
+				</view>
+				<view class="rightBox">
+					<u-icon name="arrow-right" color="#969799" size="28"></u-icon>
+				</view>
+			</view>		
+
+			<view class="u-f-jsb u-p-l-32 u-p-r-32 itemBox line click-able">
+				<view class="leftBox u-f u-f-jc">
+					<u-icon name="coupon" size="28" color="red"></u-icon>
+					<view class="marginL5 u-f-ajc">收藏</view>
+				</view>
+				<view class="rightBox">
+					<u-icon name="arrow-right" color="#969799" size="28"></u-icon>
+				</view>
+			</view>			
+
+			<view class="u-f-jsb u-p-l-32 u-p-r-32 itemBox line click-able">
+				<view class="leftBox u-f u-f-jc">
+					<u-icon name="coupon" size="28" color="red"></u-icon>
+					<view class="marginL5">福利社</view>
+				</view>
+				<view class="rightBox">
+					<u-icon name="arrow-right" color="#969799" size="28"></u-icon>
+				</view>
+			</view>		
+
+			<view class="u-f-jsb u-p-l-32 u-p-r-32 itemBox click-able">
+				<view class="leftBox u-f u-f-jc">
+					<u-icon name="coupon" size="28" color="red"></u-icon>
+					<view class="marginL5">密码重置</view>
+				</view>
+				<view class="rightBox">
+					<u-icon name="arrow-right" color="#969799" size="28"></u-icon>
+				</view>
+			</view>									
+			
+			<!-- <u-cell-group class="u-m-t-20">
+				<u-cell-item icon="setting" title="设置"></u-cell-item>
+			</u-cell-group>					 -->
+
+			<view class="u-f-jsb u-p-l-32 u-p-r-32 itemBox click-able marginT20">
+				<view class="leftBox u-f u-f-jc">
+					<u-icon name="coupon" size="28" color="red"></u-icon>
+					<view class="marginL5">设置</view>
+				</view>
+				<view class="rightBox">
+					<u-icon name="arrow-right" color="#969799" size="28"></u-icon>
+				</view>
+			</view>		
+
+			<view class="loginOutBtn marginT20">
+				<u-button :custom-style="customBtnStyle" class="click-able" @click="handlerLoginOut">退出</u-button>
+			</view>		
 		</view>	
 	</container>	
 </template>
 
 <script>
+	// 引入mescroll-mixins.js
+	// import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js"
 	import uActionSheet from "uview-ui/components/u-action-sheet/u-action-sheet.vue";
 	import photoPng from '@/static/imgs/icon/photo.png'
 	import setPng from '@/static/imgs/icon/set.png'
@@ -255,39 +182,20 @@
 		},	
 		data() {
 			return {
-				flag: false, // 控制首次加载时的 onload 和 onshow 的重复加载
-				name: '',
-				bg: {
-					// my_bg: `${this.$configs.baseImgsUrl+this.$configs.baseUrlConfigs.imgs_bg.my_bg}`
-					my_bg: ''
+				user: {
+					name: '张10032',
+					empNo: '89757'
 				},
-				photo_png: photoPng,
-				set_png: setPng,
-				card_png: cardPng,
-				achievement_png: achievementPng,
-				record_png: recordPng,
-				forwardRight_png: forwardRightPng,
-				help_png: helpPng,
-				invitation_png: invitationPng,
-				pHeight: 0, 
-				startY: 0, 
-				scrollTop_refresh: 0, // 滑动的距离	
-				list: [{
-					text: '点赞',
-					color: 'blue',
-					fontSize: 28
-				}, {
-					text: '分享'
-				}, {
-					text: '评论'
-				}],
-				show: true							
+				customBtnStyle: {
+					backgroundColor: '#00aeef !important', // 注意驼峰命名，并且值必须用引号包括，因为这是对象
+					color: '#fff !important'
+				}	
 			}
 		},
 
 		onLoad() {
-			this.avaterPic = this.getAvaterPic()
-			console.log("--------------",this.$u)
+			// this.avaterPic = this.getAvaterPic()
+			// console.log("--------------",this.$u)
 		},
 		onShow() {
 			
@@ -319,33 +227,19 @@
 		methods:{
 			...mapMutations(['loginOut']),
 			onComLoad(){
-				// 异步下载 首页的背景图片存入 缓存中 后续就不用再次加载
-				// debugger
-				if( !this.bg.my_bg ){
-					uni.downloadFile({
-						url: `${this.$configs.baseImgsUrl+this.$configs.baseUrlConfigs.imgs_bg.my_bg}`,
-						success: (res) => {
-							// debugger
-							if(res.statusCode === 200 && res.tempFilePath){
-								console.log("99999999999",res)
-								// res.tempFilePath
-								this.bg.my_bg = res.tempFilePath
-								// uni.saveFile({
-								// 	 
-								// }) 
-							}
-						},
-						fail: (error) => {
-								
-						}
-					})	
-				}else {
-					console.log("find首页背景图片已经下载过了")
-				}			
+		
 			},			
 			// 刷新页面
 			refreshPage () {
 				
+			},
+			// 下拉刷新
+			downRefreshPage(page, mescroll){
+
+			},
+			// 上拉加载
+			upRefreshPage(page, mescroll){
+
 			},
 			// 登陆
 			bindLogin () {	
@@ -385,37 +279,16 @@
 					}
 				})
 			},
-			// 点击设置
-			clickSetBtn(){
-				debugger
-				this.navigatePage("../packageB/my/set/index")
+			handlerLoginOut(){
+				this.confirm("确定退出吗？").then(res => {
+					debugger
+					console.log(res)
+					let resUrl = this.$findPageUrl("login")
+					this.togoPage(resUrl,{}, 'relaunch')
+				}).catch(res => {
+					debugger
+				})
 			},
-			// 点击报名卡片
-			clickLessons () {
-				debugger
-				this.navigatePage('../packageB/my/signUpCard/signUpCard')
-			},
-			// 
-			// 点击 我的成就
-			async clickAchivement () {
-				this.navigatePage('../packageB/my/myAchievement/index')
-			},
-			// 学习记录
-			clickRecord(){
-				this.navigatePage('../packageB/my/learnRecord/index')
-			},
-			//帮助中心
-			clickHelp(){
-				debugger
-				this.navigatePage('../packageB/my/help/index')
-			},
-			// 邀请好友
-			clickInvitation() {
-				this.navigatePage('../packageB/my/inviteFriends/index')
-			},
-			formSubmit(){
-				
-			}
 		}
 	}
 </script>

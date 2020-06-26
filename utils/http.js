@@ -26,7 +26,7 @@
 import qs from 'qs'
 import store from '@/store/index.js'
 // import { configs } from '@/api/config'
-let configs = require('@/api/config')
+let configs = require('@/api/configs')
 console.log(configs)
 // debugger
 /**
@@ -69,8 +69,8 @@ export default {
 	config: {
 		baseUrl: configs.baseUrl,
 		header: {
-			'Content-Type':'application/json;charset=UTF-8',  // 默认请求的content-Type 为 application/json
-			// 'Content-Type':'application/x-www-form-urlencoded'
+			// 'Content-Type':'application/json;charset=UTF-8',  // 默认请求的content-Type 为 application/json
+			'Content-Type':'application/x-www-form-urlencoded'
 		},  
 		timeout: 30000,
 		data: {},
@@ -87,70 +87,80 @@ export default {
 	interceptor: {
 		// 默认统一的请求拦截函数
 		request: (configs) => {
-		  // 将请求的参数中 默认增加 token
-		  // debugger
-		  console.log(configs)
-		  const data = configs.data || {}
-		  // 主要控制是否loading
-		  const loading = configs.loading 
-		  if( configs.url === `${configs.baseUrl}/users/register` || configs.url === `${configs.baseUrl}/app/customerApp/loginAndRegister` ){
-			  // 小程序登陆接口 和app 注册登陆接口
-		  }else {
-			// 非登录接口时 需要接口中 统一加上 token 属性（根据业务需求来定）
-			let token = store.getters.userToken
-			if(token){
-				// token 存在 则 统一添加 token属性
-				configs.data = JSON.stringify(Object.assign(configs.data, {
-					'token': store.getters.userToken  // 从store 中 获取userToken 
-				}))  
+			// 将请求的参数中 默认增加 token
+			// debugger
+			console.log(configs)
+			let data = configs.data || {}
+			// 主要控制是否loading
+			let loading = configs.loading 
+			if( configs.url === `${configs.baseUrl}/users/register` || configs.url === `${configs.baseUrl}/app/customerApp/loginAndRegister` ){
+				// 小程序登陆接口 和app 注册登陆接口
 			}else {
-				// 没有token 页面跳转到 到登陆页面
-				//#ifdef H5 || APP-PLUS
-				uni.showModal({
-					title: '提示',
-					content: '您暂未登陆,请先登陆',
-					showCancel: true,
-					cancelText: '取消',
-					confirmText: '登陆',
-					success: res => {
-						uni.navigateTo({
-							url: '../amos-login/login',
-							success: res => {
-								console.log("调转到了登陆页面")
-							},
-							fail: () => {},
-							complete: () => {}
-						});
-					},
-					fail: () => {},
-					complete: () => {}
-				});
-				//#endif
-			}
-		  }
-		  	// 全局属性中传入的 loading 为真，则需要显示
-			//   if(loading){
-			// 	const title = configs.loadingText
-			// 	// 加载loading
-			// 	uni.showLoading({
-			// 		title: title,
-			// 		mask: true
-			// 	});
-			//   }
-
-			if(loading){
-				// const title = configs.loadingText
-				// // 加载loading
-				// uni.showLoading({
-				// 	title: title,
-				// 	mask: true
-				// });
-				// 显示全屏的allLoading
-				++allloadingNum
-				if( allloadingNum <=1 ){
-					store.dispatch("setContainerAllloadingFlag", true)
-					console.log("https-----------【++allloadingNum】后的数量-触发了setContainerAllloadingFlag--", allloadingNum)
+				// 非登录接口时 需要接口中 统一加上 token 属性（根据业务需求来定）
+				// let token = store.getters.userToken 
+				let token = '3DF72A5D-9522-41B9-8E16-FD7476A6A03F' 
+				if(token){
+					// token 存在 则 统一添加 token属性
+					configs.data = Object.assign(configs.data, {
+						// 'token': store.getters.userToken  // 从store 中 获取userToken 
+						'token': '3DF72A5D-9522-41B9-8E16-FD7476A6A03F',  // 从store 中 获取userToken 
+						'CompanyCode': 80000000,
+						'UserId': 5328
+					})  
+				}else {
+					// 没有token 页面跳转到 到登陆页面
+					//#ifdef H5 || APP-PLUS
+					uni.showModal({
+						title: '提示',
+						content: '您暂未登陆,请先登陆',
+						showCancel: true,
+						cancelText: '取消',
+						confirmText: '登陆',
+						success: res => {
+							uni.navigateTo({
+								// url: '../amos-login/login',
+								url: '/pages/amos-login/login',
+								success: res => {
+									console.log("跳转到了登陆页面")
+								},
+								fail: () => {},
+								complete: () => {}
+							});
+						},
+						fail: () => {},
+						complete: () => {}
+					});
+					//#endif
 				}
+		  	}
+			// 请求时传入的 loading 为真，则需要显示
+			// debugger
+			if(loading){
+				let title = configs.loadingText
+				console.log(title)
+				// 加载loading
+				try {
+					uni.hideLoading()
+				} catch (error) {
+					
+				}
+				uni.showLoading({
+					title: title,
+					mask: true,
+					duration: 9000,
+					success: () => {},
+					fail: () => {},
+					complete: () => {
+
+					}
+				})			
+				// window.alert(23444)
+				// 显示全屏的allLoading
+				// ++allloadingNum
+				// if( allloadingNum <=1 ){
+				// 	store.dispatch("setContainerAllloadingFlag", true)
+				// 	console.log("https-----------【++allloadingNum】后的数量-触发了setContainerAllloadingFlag--", allloadingNum)
+				// }
 			}		
 		},
 		// 默认统一的响应拦截函数
@@ -178,7 +188,7 @@ export default {
 		options.baseUrl = options.baseUrl || this.config.baseUrl
 		options.dataType = options.dataType || this.config.dataType
 		options.timeout = options.timeout || this.config.timeout
-		options.url = options.baseUrl + options.url
+		options.url = options.baseUrl + options.url  // 将baseUrl 和 url 凭借成完整的请求地址
 		options.data = options.data || {}
 		options.loading = options.loading || this.config.loading
 		options.loadingText = options.loadingText || this.config.loadingTextloadingText
@@ -196,10 +206,29 @@ export default {
 		return new Promise((resolve, reject) => {
 			// debugger
 			let _config = null
-			
-			//注意：options.complete 这个回调函数会在 uni.request() 调用结束后自动执行（虽然位置现在放在了 uni.request()调用 之前），
+			// debugger
+			// 将传入的配置参数与默认的参数进行合并 后赋值给 _config
+			_config = Object.assign({}, this.config, options)
+			_config.requestId = new Date().getTime()
+
+			//注意：options.complete 这个回调函数会在 uni.request() 调用结束后自动执行 complete方法 
+			// uni.requst({
+			// 	url:baseURL + options.url,
+			// 	method:options.method || 'GET',
+			// 	data:options.data,
+			// 	header:headers,
+			// 	complete(response){
+			// 		res(response)
+			// 	},
+			// 	success(response) {
+			// 		res(response)
+			// 	},
+			// 	fail(response) {
+			// 		rej(response)
+			// 	}
+			// })
 			//且uni.request()执行后的返回的数据response会自动传给 options.complate方法
-			options.complete = (response) => {
+			_config.complete = (response) => {
 				// uni.require() 请求无论是失败还是成功后都会自动走这个 complete 的回调函数方法
 				console.log("请求时间" + new Date().getTime() + ":这是uni.require() 请求完成complete的回调")
 				// debugger
@@ -222,6 +251,7 @@ export default {
 				
 				console.log("打印请求完成后的相应状态statusCode", statusCode)
 				
+				// debugger
 				if (process.env.NODE_ENV === 'development') {
 					// debugger
 					// 开发环境
@@ -232,7 +262,7 @@ export default {
 						// 失败
 						// uni.showToast({
 						// 	title: '网络请求失败，请检查网络(未启动本地服务器)',
-						// 	image: '../static/imgs/icon/error.png',
+						// 	image: require('@/static/imgs/icon/error.png'),
 						// 	mask: true,
 						// 	duration: 5000
 						// });
@@ -248,28 +278,24 @@ export default {
 						// 失败
 						// uni.showToast({
 						// 	title: '网络请求失败，请检查服务器或者网络',
-						// 	image: '../static/imgs/icon/error.png',
+						// 	image: '@/static/imgs/icon/error.png',
 						// 	mask: true,
 						// 	duration: 5000
 						// });
 						reject(response)
 					}					
-				}		
+				}						
 			}
 			
-			options.fail = (error) => {
+			_config.fail = (error) => {
 				// uni.require() 请求失败后会自动走这个 fail 的回调函数方法
 				console.log("请求时间" + new Date().getTime() + ":这是uni.require() 请求完成fail的回调")
 			}
 			
-			options.success = (response) => {
+			_config.success = (response) => {
 				// uni.request() 请求成功后会自动走这个 success 的回调函数方法
 				console.log("请求时间" + new Date().getTime() + ":这是uni.require() 请求完成success的回调")
-			}
-			// debugger
-			// 将传入的配置参数与默认的参数进行合并 后赋值给 _config
-			_config = Object.assign({}, this.config, options)
-			_config.requestId = new Date().getTime()
+			}			
 			
 			// 如果有请求的回调函数,先执行请求回调，相当于 请求拦截
 			if (this.interceptor.request) {
@@ -296,8 +322,9 @@ export default {
 			// 调用 uni.request 发起请求，
 			// debugger
 			console.log("--------------------------------",_config)
-			let a = uni.request(_config);
+			let a  = uni.request(_config)
 			// debugger
+						
 		});
 	},
 	// get 请求

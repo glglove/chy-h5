@@ -101,7 +101,7 @@
 
 <template>
 	<container>
-		<view id="login" slot="container-slot">
+		<view id="login" slot="container-slot" class="page">
 			<view class="input-group">
 				<view class="input-row border">
 					<text class="title">账号：</text>

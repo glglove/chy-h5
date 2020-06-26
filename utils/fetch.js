@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import { getToken } from '@/utils/auth'
-import { Message } from 'element-ui'
+// import { Message } from 'element-ui'
 import qs from 'qs'
 import store from '../store'
 import { nodeObjStore } from '../store/getters'
@@ -120,11 +120,11 @@ service.interceptors.request.use(config => {
   return config
 }, error => {
   // 请求错误
-  Message({
-    message: '请求错误，请刷新重试！',
-    type: 'error',
-    duration: 2000
-  }) // for debug
+  // Message({
+  //   message: '请求错误，请刷新重试！',
+  //   type: 'error',
+  //   duration: 2000
+  // }) // for debug
   console.log(error)
   return Promise.reject(error)
 })
@@ -139,11 +139,11 @@ service.interceptors.response.use(
     return response
   },
   error => {
-    Message({
-      message: '请求错误，请刷新重试！',
-      type: 'error',
-      duration: 2000
-    })
+    // Message({
+    //   message: '请求错误，请刷新重试！',
+    //   type: 'error',
+    //   duration: 2000
+    // })
     hideFullScreenLoading() // 响应成功关闭loading
     console.log(error)
     // 生产环境中请求超时后 自动跳转至 https://www.caihuiyun.cn/ 页面进行重新登录

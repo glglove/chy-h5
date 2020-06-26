@@ -30,10 +30,10 @@ extend-click {
     &:before {
         content: '';
         position: absolute;
-        top: 10px;
-        left: 10px;
-        right: 10px;
-        bottom: 10px;
+        top: 20upx;
+        left: 20upx;
+        right: 20upx;
+        bottom: 20upx;
     }
 }
 
@@ -60,13 +60,15 @@ box-shadow {
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.12), 0 0 6px 0 rgba(0,0,0,.04)
 }
 
-enter-active {
+// 用于 transition  动画
+.move-enter-active, .move-leave-active {
     transition: all 0.2s linear;
     transform: translate3d(0, 0, 0)
 }
 
-leave-active {
+.move-enter, .move-leave-active {
     opacity: 0;
+    transition: all 0.2s linear;
     transform: translate3d(100%, 0, 0)
 }
 
@@ -75,12 +77,14 @@ leave-active {
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.12), 0 0 6px 0 rgba(0,0,0,.04)
 }
 
-.click-able {
-    &:active {
-        opacity: .7;
-    }
-    &::before {
-        opacity: .7
+.box-sizing-border {
+    box-sizing: border-box;
+}
+
+.click-able:active {
+    opacity: .5;
+    &::before{
+        opacity: .5;
     }
 }
 
@@ -160,7 +164,7 @@ leave-active {
 }
   
 /* flex布局 */
-.u-f,.u-f-ac,.u-f-jc,.u-f-ajc{
+.u-f,.u-f-ac,.u-f-jc,.u-f-ajc, .u-f-jst, .u-f-jst, .u-f-jfd, .u-f-jsb, .u-f-jsr {
 	display: flex;
 }
 /* 垂直居中 */
@@ -185,6 +189,36 @@ leave-active {
 }
 
 .u-f-jsr {
+  justify-content: space-around
+}
+
+
+/* flex布局 inline-flex */
+.u-fi,.u-fi-ac,.u-fi-jc,.u-fi-ajc,.u-fi-jst,.u-fi-jfd,.u-fi-jsb,.u-fi-jsr{
+	display: inline-flex;
+}
+/* 垂直居中 */
+.u-fi-ac,.u-fi-ajc{
+	align-items: center
+}
+/* 水平居中 */
+.u-fi-jc,.u-fi-ajc{
+	justify-content: center
+}
+
+.u-fi-jst {
+  justify-content: flex-start
+}
+
+.u-fi-jfd {
+  justify-content: flex-end
+}
+
+.u-fi-jsb{
+	justify-content: space-between
+}
+
+.u-fi-jsr {
   justify-content: space-around
 }
 

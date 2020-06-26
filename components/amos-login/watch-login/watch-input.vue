@@ -168,7 +168,7 @@
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
-		height: 36upx;   /* Input 高度 */
+		/* height: 72upx;   Input 高度 */
 		color: #333333;
 		padding: 32upx;
 		margin-top:24upx;
@@ -184,6 +184,7 @@
 		text-align: left;
 		font-size: 28upx;
 		/* line-height: 100upx; */
+		height: 100%;
 		padding-right: 10upx;
 		margin-left: 20upx;
 	}

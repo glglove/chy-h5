@@ -224,7 +224,7 @@
 	}
 </style>
 <template>
-	<container :containerLoading="containerLoading">
+	<container>
 		<view  id="findBox" class="page" slot="container-slot">
 			<!--loading组件-->
 			<!-- <Loading type="4"></Loading> -->
@@ -232,63 +232,45 @@
 			<!-- {{$configs.baseImgsUrl + $configs.baseUrlConfigs.imgs_bg.find_bg}} -->
 			<!--loading-->
 			<!--已登录-->
-			<div v-if="userToken" class="find-hasLogin">
-				<view class="bgBox">
-					<image :src="bg.find_bg" class="bgpic" lazy-load="true"></image>            
-				</view>
-				<!--用于收集定时提醒的推送码-->
-				<form report-submit="true" bindsubmit="formSubmit">				
-					<view class="contentBox">
-						<view class="top"> 
-							<view class="design marginT30">21天设计</view>
-							<view class="study marginT10">理论手绘学习计划</view>
+			<div v-if="!userToken" class="find-hasLogin">
+				<mescroll-uni 
+					class="mescroll_contentList_wrap"
+					ref="mescrollRef" 
+					:height="scrollHeight"
+					@init="mescrollInit" 
+					@down="downCallback" 
+					@up="upCallback" 
+					:down="downOption" 
+					:up="upOption" 
+					id="dataList"
+				>  
+					<view class="items">
+						<view 
+							class="item" 
+							v-for="(item, index) in toolList"
+							:key="index">
+							<div class="left" :style="{background: item.color}">
+								<!-- <icon-svg :icon-class="item.img"></icon-svg> -->
+							</div>
+							<div class="right" :class="(index + 1) === toolList.length ? 'last' : ''">
+							<div class="content-title">
+								<span class="text">{{item.name}}</span>
+								<span class="time">下午 4：00</span>
+							</div>
+							<div class="last-content">
+								<span class="text">消息通知已开通，请各位准时参加,消息通知已开通，请各位准时参加</span>
+								<span class="badge">
+								<span>120</span>
+								</span>
+							</div>
+							</div>
 						</view>
-
-						<view class="findContainer">
-							<view class="contentTop">
-								<!---连续打卡-->
-								<view class="contentTopLeft lt">
-									<button class="signUpPicBox" id="signUp_top" name="signUp_top" form-type="submit">
-										<image class="signUpPic click-able" :src="require('@/static/imgs/icon/signUp.png')" layz-load="true" @tap.stop = "clickRank"></image>
-									</button>
-									<view class="signUpNum marginT10">
-										<text class="signDay">{{signData.signDay}}</text>
-										<text class="signTotalDay">/21</text>
-									</view>
-									<view class="signUpTit marginT10"><text>连续打卡</text></view>
-								</view>
-
-								<!---排行榜-->
-								<view class="contentTopRight rt">
-									<button class="rankPicBox" id="rank_top" name="rank_top" form-type="submit">
-										<image class="rankPic click-able" :src="require('@/static/imgs/icon/rank.png')" layz-load="true" @tap.stop = "clicKRankList"></image>
-									</button>
-									<view class="rankNum marginT10">
-										<text class="rankNo">{{signData.rankNo}}</text>
-									</view>
-									<view class="rankTit marginT10"><text>排行榜</text></view>                    
-								</view>  
-											
-								<button class="signUpBtn click-able" form-type="submit" id = "signUp" name="siginBtn" @tap.stop = "immediateSignUp">
-									<image class="signUpPic" :src="require('@/static/imgs/icon/signUpPic.png')"></image>
-									<text class="signUpTit click-able">立即报名</text>
-								</button>
-
-								<button class="invitationBtn marginT40 click-able" id = "invitate" form-type="submit" name="invitateBtn"  :disabled="shairePic_clickable" @tap.stop = "invitateFriends">
-									<image class="invitationPic" :src="require('@/static/imgs/icon/invitationPic.png')" layz-load="true"></image>
-									<text class="invitationTit click-able">邀请好友</text>               
-								</button>							  
-							</view>			
-						</view>		
-						
-						<!--引用footerCmp-->
-						<!-- <footer-explain versition="20150205"></footer-explain> -->
 					</view>
-				</form>				
+				</mescroll-uni>				
 			</div>
 			
 			<!---未登录-->
-			<view v-if="!userToken" class="find-notLogin">
+			<view v-if="userToken" class="find-notLogin">
                 <view class="title" @click="clickBtn">
                     您好 游客。
                 </view>
@@ -305,13 +287,8 @@
 <script>
 	// import {uniCard, uniPagination} from '@dcloudio/uni-ui'	
 	// import FooterExplain from '@/pages/components/footerExplain/footerExplain'
-	import findApi from '@/api/find.js'
-	import commApi from '@/api/comm.js'
 	import { miniProApi } from '@/utils/mixins.js'
-	// import { REQ_OK } from '@/api/config'
-	// import container from '@/pages/components/container1/container'
 	import { mapGetters } from 'vuex'
-
 	export default {
 		mixins: [ miniProApi ],
         components: {
@@ -321,22 +298,73 @@
 		},			
 		data() {
 			return {
-				contentData: [],
-				version: this.$configs.miniproConfings.version,
-				shairePic_clickable: false,  // 控制邀请好友的disable状态
-				type: 1, // 1 总排名  2 点赞排名  3 邀请排名  
-				bg: {
-					// 'find_bg': `${this.$configs.baseImgsUrl+this.$configs.baseUrlConfigs.imgs_bg.find_bg}`
-					'find_bg': ''
+				mescroll:null, 
+				upOption: {
+					auto: false, //是否在初始化完毕之后自动执行一次上拉加载的回调
+					use: true, // 是否启用下拉刷新 如果配置false,则不会初始化上拉刷新的布局
+					isBounce: true, //是否允许橡皮筋回弹效果, 默认不允许
+					page: {
+						num: 1, //当前页 默认0,回调之前会加1; 即callback(page)会从1开始
+						size: 10,  // pageSize 为miniProApi data中的共有值
+						time: null,  //加载第一页数据服务器返回的时间 (可空); 防止用户翻页时,后台新增了数据从而导致下一页数据重复;
+					},
+					textLoading: '加载中 ...',  //上拉加载中的文本
+					textNoMore: '-- END --',  // 没有更多数据的提示文本
+					bgColor: 'transparent', // 下拉区域背景颜色 
+					textColor: 'gray', // 下拉文本的颜色 (当bgColor配置了颜色,textColor未配置时,则会默认为白色 1.2.4新增) 
+					noMoreSize: 5, // 配置列表的总数量要大于等于5条才显示'-- END --'的提示
+					empty: {//列表第一页无任何数据时,显示的空提示布局; 需配置warpId或clearEmptyId才生效;
+						//列表第一页无任何数据时,显示的空提示布局; 需配置warpId才显示
+						// warpId:	"xxid", //父布局的id (1.3.5版本支持传入dom元素)													
+						use: false, // 是否启用
+						btnText: '返回', // 按钮文本
+						icon: require("@/components/mescroll-uni/components/mescroll-uni/mescroll-empty.png"), //图标,默认null
+						tip: "暂无相关数据~", //提示							
+					}, 
+					toTop: {
+						//回到顶部按钮
+						// src: "../img/mescroll-totop.png", //图片路径,默认null,支持网络图
+						offset: 1000 //列表滚动1000px才显示回到顶部按钮	
+					},					
+					clearEmptyId: "dataList", //相当于同时设置了clearId和empty.warpId; 简化写法;默认null，配置了此项后数据请求里就不需要配置if(pageindex == 1) {self.tableData = [];}
 				},
-				loadingMoreIsShow: false,
-				authorzeIsShow: "",
-				signData: {
-					signDay: "0",
-					rankNo: "0",
-					totalDay: "0",
+				// 下拉刷新的配置(可选, 90%的情况无需配置)
+				downOption: { 
+					use: true, // 是否启用下拉刷新 如果配置false,则不会初始化下拉刷新的布局
+					auto: false, //是否在初始化完毕之后自动执行一次下拉加载的回调
 				},
-				loadingMore: {}					
+				toolList: [
+					{
+						name: '消息通知',
+						img: 'xiaoxi',
+						path: '',
+						color: '#51A1F9'
+					},
+					{
+						name: '工作提醒',
+						img: 'tixing',
+						path: '',
+						color: '#34CAD6'
+					},
+					{
+						name: '审批提醒',
+						img: 'shenpi',
+						path: '',
+						color: '#FF8E8E'
+					},
+					{
+						name: '日志提醒',
+						img: 'rizhi',
+						path: '',
+						color: '#75C2F4'
+					},
+					{
+						name: '任务通知',
+						img: 'renwu',
+						path: '',
+						color: '#6FCA6C'
+					}
+				]				
 			};
 		},	
 		computed:{
@@ -345,7 +373,11 @@
 				'forcedLogin', 
 				'hasLogin', 
 				'userName'
-			])
+			]),
+			scrollHeight(){
+            	let height = this.pHeight - 84
+            	return `${height}px`
+        	}
 		},
 		watch: {
 			userToken: {
@@ -453,102 +485,22 @@
 				// debugger
 				this._getRankDayData()
 			},
-			clickBtn(){
-				this.navigatePage("../packageA/find/signUpRecord/index")
-			},
-			// 获取list 列表数据
-			_getRankDayData () {
-				// debugger
-				// uni.showLoading()
-				this.containerLoading = true
-				let paramsObj = {
-					params: {
-
-					},
-					page: {
-						pageSize: 10,
-						pageNum: 1
-					}
+			// 下拉刷新
+			downRefreshPage(page, mescroll){
+				debugger
+				if(mescroll){
+					console.log("下拉刷新")	
+					mescroll.endSuccess(10, false)				
 				}
-				findApi.getRankDayData( paramsObj ).then(res => {
-					// debugger
-					this.containerLoading = false
-					console.log(res)
-					if(res && res.data.code === 1){
-						// debugger
-						// this.getDeviceApi().showToast({
-						// 	title:"数据获取成功",
-						// 	icon: 'success',
-						// 	mask: true,
-						// 	duration:2000
-						// })
-						this.contentData = res.data.data
-				
-						let {
-							days,
-							rank,
-							total
-						} = res.data.data
-
-						this.signData.signDay = days
-						this.signData.rankNo = rank
-						this.signData.totalDay = total
-						//页面跳转到
-						// uni.redirectTo({
-						// 	url:'../packageA/find/ranklist/index'
-						// })
-					}else{
-						// uni.hideLoading()
-						this.getDeviceApi().showToast({
-							title:"数据获取失败",
-							icon: 'error',
-							mask: true,	
-							duration:2000
-						})
-
-					}
-				}).catch(err => {
-					this.containerLoading = false
-					// uni.hideLoading()
-					this.getDeviceApi().showToast({
-						title:"数据获取失败,请重试",
-						icon: 'error',
-						mask:true,
-						duration:2000
-					})
-				})
 			},
-			// 点击连续打卡btn
-			async clickRank () {
-				this.navigatePage(`../packageA/find/ranklist/index`)
-			},  
-			// 点击 排行榜btn
-			clicKRankList(){
-				this.navigatePage('../packageA/find/signUpRecord/index')
-			},
-			// 立即报名
-			immediateSignUp(){
-				//测试unipush
-				// commApi.getuiPush().then(res => {
-				// 	debugger
-				// 	console.log(res)
-				// })
-				// this.navigatePage("../packageA/find/lessonList/index")
-				this.navigatePage("../webSocket/testWebSocket")
-			},
-			// 邀请好友
-			async invitateFriends (e) {
-				// debugger
-				console.log("点击了 邀请好友的 button")
-				// 未生成海报前 禁止再次点击  邀请好友
-				this.shairePic_clickable = true
-											
-				// 页面调转至 邀请页面
-				this.navigatePage(`../packageA/find/invitation/index`)	
-				
-				this.shairePic_clickable = false
-				
-			}   		
+			// 上拉加载
+			upRefreshPage(page, mescroll){
+				debugger
+				if(mescroll){
+					console.log("上拉刷新")	
+					mescroll.endSuccess(1)						
+				}
+			},					
 		}
 	}
 </script>
