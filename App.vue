@@ -13,6 +13,10 @@
 </script>
 
 <style lang="scss" rel="stylesheet/stylus">
+	/**H5 端 nprogress 进度条 颜色设置*/
+	#nprogress .bar {
+      background: #00AEEF !important; //自定义颜色
+    }
 	/*每个页面公共css */
     /* #ifndef APP-PLUS-NVUE */
     /* uni.css - 通用组件、模板样式库，可以当作一套ui库应用 */

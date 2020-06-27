@@ -5,6 +5,13 @@ Vue.use(uView)
 import store from './store' // vuex状态管理
 // import './icons' // 引入 svg 字体图标 注意：uni-app中不支持 svg图标
 
+//#ifdef H5
+import NProgress from 'nprogress' // Progress 进度条
+import 'nprogress/nprogress.css'// Progress 进度条样式
+NProgress.configure({showSpinner: false })
+Vue.prototype.$NProgress = NProgress
+//#endif
+
 import MescrollBody from "@/components/mescroll-uni/components/mescroll-uni/mescroll-body.vue" // 引入mescroll-body 组件 
 import MescrollUni from "@/components/mescroll-uni/components/mescroll-uni/mescroll-uni.vue"  // 引入mescorll-uni 组件
 Vue.component('mescroll-body', MescrollBody)

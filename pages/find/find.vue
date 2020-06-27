@@ -1,209 +1,26 @@
 <style lang="less" scoped>
-	uni-page-body {
-		height: 100%
-	}
+	// uni-page-body {
+	// 	height: 100%
+	// }
 	#findBox{
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		margin: auto;
-		.find-hasLogin {
-			height: 100%;
-			width: 100%;
-			.bgBox{
-				width: 100%;
-				height: 100%;
-				.bgpic{
-					width: 100%;
+		height: 100vh !important;
+		.items {
+			padding: 40upx;
+			box-sizing: border-box;
+			.item {
+				height: 150upx;
+				.left {
+					width: 200upx;
+
 				}
-			}			
-			.contentBox{
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				margin: auto;
-				z-index: 1;
-				overflow-y: auto;
-				.top {
-					width: 650upx;
-					height: 400upx;
-					margin: 0 auto;
-					.design {
-						height: 70upx;
-						font-size: 40upx;
-						color: #ffffff;
-						line-height: 70upx;					
+				.right {
+					width: 600upx;
+					&.line {
+						border-bottom: 1px solid red
 					}
-					.study {
-						width: 400upx;
-						height: 70upx;
-						font-size: 40upx;
-						color: #ffffff;
-						line-height: 70upx;
-					}
-				}
-				.findContainer{
-					width: 650upx;
-					height: 600upx;
-					margin: 0 auto;
-					border-radius: 20upx;
-					padding: 30upx 95upx 0 95upx;
-					box-sizing: border-box;
-					border-radius: 10upx;
-					border: 2upx solid rgba(250, 235, 228, 0.2);
-					box-shadow: 0 12px 20upx rgba(252,195,165,0.2);	
-					.contentTop {
-						width: 462upx;
-						height: 280upx;
-						.contentTopLeft{
-							width: 50%;
-							height: 255upx;
-							.signUpPicBox {
-								width: 128upx;
-								height: 128upx;
-								border-radius: 50%;
-								margin: 0 auto;
-								padding: 0;
-								.signUpPic{
-									width: 100%;
-								}
-							}
-							.signUpNum {
-								width: 85upx;
-								height: 67upx;
-								margin: 0 auto;   
-								text-align: center;                 
-								.signDay {
-									width: 50upx;
-									height: 100%;
-									color: #FA9960;
-									line-height: 67upx;
-									font-weight: 500;
-									font-size: 48upx;
-									text-align: center;
-								}
-								.signTotalDay {
-									width: 36upx;
-									height: 100%;
-									color: #FA9B64;
-									line-height: 67upx;
-									text-align: center;
-									font-size: 24upx;
-								}
-							}
-							.signUpTit {
-								// width: 120upx;
-								height: 42upx;
-								text-align: center;
-								line-height: 42upx;
-								color: #000000;
-								font-size: 30upx;
-								margin: 0 auto;
-							}
-						}
-						.contentTopRight{
-							width: 50%;
-							height: 255upx;
-							.rankPicBox {
-								width: 128upx;
-								height: 128upx;
-								border-radius: 50%;
-								margin: 0 auto;
-								padding: 0;
-								.signUpPic{
-									width: 100%;
-								}
-							}
-							.rankNum {
-								width: 85upx;
-								height: 67upx;
-								margin: 0 auto;     
-								text-align: center;               
-								.rankNo {
-									width: 50upx;
-									height: 100%;
-									color: #FA9960;
-									line-height: 67upx;
-									font-weight: 500;
-									font-size: 48upx;
-									text-align: center;
-								}
-							}
-							.rankTit {
-								width: 120upx;
-								height: 42upx;
-								text-align: center;
-								line-height: 42upx;
-								color: #000000;
-								font-size: 30upx;
-								margin: 0 auto;
-							}                
-						}
-					}					
-					.signUpBtn {
-						width: 462upx;
-						height: 99upx;
-						line-height: 99upx;
-						background-color: #FA9960;
-						border-radius: 49.5upx;
-						text-align: center;
-						box-shadow: 2upx 2upx 5upx rgba(0,0,0,0.1);
-						.signUpPic {
-							width: 48upx;
-							height: 48upx;
-							vertical-align: middle;
-							position: absolute;
-							top: 50%;
-							left: 30%;
-							transform: translate(-50%,-50% );
-						}
-						.signUpTit {
-							position: absolute;
-							top: 50%;
-							left: 50%;
-							transform: translate(-50%,-50%);
-							width: 141upx;
-							color: #FFFFFF;
-							font-size: 34upx;
-							margin-left: 25upx;
-						}
-					}
-					.invitationBtn {
-						width: 462upx;
-						height: 99upx;
-						background-color: #FFFFFF;
-						border-radius: 49.5upx;
-						border: 2px dashed #FA9960;
-						text-align: center;      
-						color: #FA9960; 
-						box-shadow: 2upx 2upx 5upx rgba(0,0,0,0.1);                 
-						.invitationPic {
-							width: 48upx;
-							height: 48upx;
-							vertical-align: middle;
-							position: absolute;
-							top: 50%;
-							left: 30%;                
-							transform: translate(-50%,-50% );                
-						}
-						.invitationTit {
-							position: absolute;
-							top: 50%;
-							left: 50%;
-							transform: translate(-50%,-50%);
-							width: 141upx;
-							height: 100%;
-							font-size: 34upx;
-							margin-left: 25upx;
-						}
-					}				
 				}
 			}
-		}	
+		}
 		.find-notLogin {
             display: flex;
             flex: 1;
@@ -231,6 +48,8 @@
 			<!-- bg.find_bg:{{bg.find_bg}} -->
 			<!-- {{$configs.baseImgsUrl + $configs.baseUrlConfigs.imgs_bg.find_bg}} -->
 			<!--loading-->
+			<u-search placeholder="日照香炉生紫烟" v-model="searchKey"></u-search>
+			<i class="icon-cover my-iconfont">icon图标</i>
 			<!--已登录-->
 			<div v-if="!userToken" class="find-hasLogin">
 				<mescroll-uni 
@@ -246,24 +65,21 @@
 				>  
 					<view class="items">
 						<view 
-							class="item" 
+							class="item u-f-jsb" 
 							v-for="(item, index) in toolList"
 							:key="index">
-							<div class="left" :style="{background: item.color}">
-								<!-- <icon-svg :icon-class="item.img"></icon-svg> -->
-							</div>
-							<div class="right" :class="(index + 1) === toolList.length ? 'last' : ''">
-							<div class="content-title">
-								<span class="text">{{item.name}}</span>
-								<span class="time">下午 4：00</span>
-							</div>
-							<div class="last-content">
-								<span class="text">消息通知已开通，请各位准时参加,消息通知已开通，请各位准时参加</span>
-								<span class="badge">
-								<span>120</span>
-								</span>
-							</div>
-							</div>
+							<view class="left">
+								左边图标
+							</view>
+							<view class="right line">
+								<view class="right-top u-f-jsb">
+									<view class="right-top-left">消息通知</view>
+									<view class="right-top-right">下午4:00</view>
+								</view>
+								<view class="right-bottom ellipsis1">
+									消息通知已开通，请各位准时参加消息通知已开通，请各位准时参加消息通知已开通，请各位准时参加消息通知已开通，请各位准时参加
+								</view>
+							</view>
 						</view>
 					</view>
 				</mescroll-uni>				
@@ -333,6 +149,7 @@
 					use: true, // 是否启用下拉刷新 如果配置false,则不会初始化下拉刷新的布局
 					auto: false, //是否在初始化完毕之后自动执行一次下拉加载的回调
 				},
+				searchKey: '',
 				toolList: [
 					{
 						name: '消息通知',
@@ -458,32 +275,9 @@
 					})				
 				}	
 				//#endif
-				
-				// 异步下载 首页的背景图片存入 缓存中 后续就不用再次加载
-				if( !this.bg.find_bg ){
-					uni.downloadFile({
-						url: `${this.$configs.baseImgsUrl+this.$configs.baseUrlConfigs.imgs_bg.find_bg}`,
-						success: (res) => {
-							if(res.statusCode === 200 && res.tempFilePath){
-								console.log("99999999999",res)
-								// res.tempFilePath
-								this.bg.find_bg = res.tempFilePath
-								// uni.saveFile({
-								// 	
-								// }) 
-							}
-						},
-						fail: (error) => {
-								
-						}
-					})	
-				}else {
-					console.log("find首页背景图片已经下载过了")
-				}
 			},	
 			refreshPage() {
 				// debugger
-				this._getRankDayData()
 			},
 			// 下拉刷新
 			downRefreshPage(page, mescroll){

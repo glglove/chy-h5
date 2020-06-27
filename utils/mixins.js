@@ -21,8 +21,7 @@ export const miniProApi = {
 		return {
 			REQ_OK: REQ_OK,
 			pHeight: 0, // container 组件的 高，从系统中获取
-			showEmptyPage: false, // 是否显示empty页面
-			emptyType: 'data', //car 、page、search、address、wifi、order、coupon、favor、permission、history、news、message、list、data
+			showEmptyPage: false, // 是否显示empty页面		emptyType: 'data', //car 、page、search、address、wifi、order、coupon、favor、permission、history、news、message、list、data
 			emptyText: '暂无数据', // empty页面显示的文字
 			showEmptyPageBtn: true, // empty页面是否显示操作按钮
 			showBtnType: 1, // 1 是返回按钮 2 是重新刷新按钮
@@ -262,6 +261,16 @@ export const miniProApi = {
 		togoPage(url, data, togoType = 'navigate'){
 			// url 为不带参数的链接， togoType为跳转的方式：navigate,switch,redirect,relaunch
 			// data 为 传递的参数对象
+
+			// 页面跳转时 需要验证是否登录
+			// if(){
+
+			// }
+			// h5 端 使用 时 需要有页面顶部的进度条
+			//#ifdef H5
+			this.$NProgress.start()
+			//#endif
+
 			function param (data) {
 				let urlParams = ''
 				for (var k in data) {
@@ -279,34 +288,55 @@ export const miniProApi = {
 					uni.navigateTo({  
 						url
 					}) 
+					//#ifdef H5  
+					this.$NProgress.done()
+					//#endif					
 				break
 				case 'switch':
 					uni.switchTab({  
 						url
 					}) 
+					//#ifdef H5  
+					this.$NProgress.done()
+					//#endif					
 				break
 				case 'redirect':
 					uni.redirectTo({  
 						url
 					}) 
+					//#ifdef H5  
+					this.$NProgress.done()
+					//#endif					
 				break
 				case 'relaunch':
 					uni.reLaunch({  
 						url
 					}) 
+					//#ifdef H5  
+					this.$NProgress.done()
+					//#endif					
 				break	
 				default: 
 					uni.navigateTo({  
 						url
-					}) 																
+					}) 	
+					//#ifdef H5  
+					this.$NProgress.done()
+					//#endif																				
 			}		
 		},		
 		// 页面跳转
 		navigatePage ( url ) {
+			//#ifdef H5  
+			this.$NProgress.start()
+			//#endif			
 			return new Promise((resolve , reject) => {
 				uni.navigateTo({
 				  url:url,
 				  success: res => {
+					//#ifdef H5  
+					this.$NProgress.done()
+					//#endif					  
 					resolve(res)
 				  },
 				  fail: res => {
@@ -316,10 +346,16 @@ export const miniProApi = {
 			})
 		},
 		switchPage ( url ) {
+			//#ifdef H5  
+			this.$NProgress.start()
+			//#endif
 			return new Promise((resolve , reject) => {
 				uni.switchTab({
 				  url:url,
 				  success: res => {
+					//#ifdef H5  
+					this.$NProgress.done()
+					//#endif					  
 					resolve(res)
 				  },
 				  fail: res => {
@@ -329,10 +365,16 @@ export const miniProApi = {
 			})
 		},
 		redirectPage ( url ) {
+			//#ifdef H5  
+			this.$NProgress.start()
+			//#endif			
 			return new Promise((resolve , reject) => {
 				uni.redirectTo({
 				  url:url,
 				  success: res => {
+					//#ifdef H5  
+					this.$NProgress.done()
+					//#endif
 					resolve(res)
 				  },
 				  fail: res => {
@@ -342,10 +384,16 @@ export const miniProApi = {
 			})
 		},
 		reLaunchPage ( url ) {
+			//#ifdef H5  
+			this.$NProgress.start()
+			//#endif			
 			return new Promise((resolve , reject) => {
 				uni.reLaunch({
 				  url:url,
 				  success: res => {
+					//#ifdef H5  
+					this.$NProgress.done()
+					//#endif						  
 					resolve(res)
 				  },
 				  fail: res => {

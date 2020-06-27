@@ -47,7 +47,7 @@
                 <view class="contentBox">
                     内容区
                 </view>
-                <view class="footerBox u-f-jsb">
+                <view class="footerBox u-f-jsb wrap960">
                     <u-button 
                         class="btn u-f0  borderBox" 
                         type="primary" 

@@ -4,7 +4,12 @@
 ---描述： 待办审批详情
 --->
 <style lang="scss" scoped>
-
+#launchDetail {
+    height: 100vh !important;
+    .contentBox {
+        height: calc(100% - 88upx)
+    }
+}
 </style>
 
 <template>
