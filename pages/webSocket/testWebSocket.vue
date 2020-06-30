@@ -40,7 +40,7 @@
 			clickRequest(){
 				debugger
 				// 先监测是否已经登陆
-				let res = this.checkLogin()
+				let res = this.$checkLogin()
 				if(!res){
 					// 未登陆
 				}else {

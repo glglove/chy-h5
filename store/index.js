@@ -46,4 +46,14 @@ const store = new Vuex.Store({
 	//#endif
 })
 
+
+
+// 在index文件里放入如下代码段，主要作用是通过正则匹配文件，当我们在页面调用vuex的同步异步方法时，通过这个文件去转发并执行
+// 注意如果 放了一下代码段，则 上面 modules 对象 需要为空，否则 调取 actions/mutations时 会重复调用
+// const storeContext = require.context('@/store/modules', true, /\.js$/)
+
+// storeContext.keys().forEach((modules) => {
+//   store.registerModule(modules.replace(/(^\.\/)|(\.js$)/g, ''), storeContext(modules).default)
+// })
+
 export default store

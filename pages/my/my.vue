@@ -31,12 +31,15 @@
 	}
 	.itemBox {
 		background-color: #ffffff;
-		padding: 20upx 32upx;
+		// padding: 20upx 32upx;
 		.leftBox {
 			// width: 200upx
 		}
 		.rightBox {
 			// width: 200upx
+			.u-icon {
+				height: 100% !important;
+			}
 		}
 	}
 </style>
@@ -45,26 +48,26 @@
 	<container :containerLoading="containerLoading">
 		<view id="my" class="page borderBox" slot="container-slot">
 			<u-navbar :is-back="false" title="我的" :border-bottom="false">
-				<view class="u-f u-f-jfd" style="width: 100%;">
+				<!-- <view class="u-f u-f-jfd" style="width: 100%;">
 					<view class="camera u-f u-row-center">
 						<u-icon name="camera-fill" color="#000000" size="48"></u-icon>
 					</view>
-				</view>
+				</view> -->
 			</u-navbar>
 			
 			<view class="u-f-ac user-box u-p-l-30 u-p-r-20 u-m-t-20">
 				<view class="u-m-r-10 u-f-ac">
-					<u-avatar :src="pic" size="140"></u-avatar>
+					<u-avatar  size="140"></u-avatar>
 				</view>
 				<view class="u-flex-1 u-m-l-20">
 					<view class="u-font-18">{{user.name}}</view>
 					<view class="u-font-14 u-tips-color">企信号:{{user.empNo}}</view>
 				</view>
 				<view class="u-m-l-10 u-p-10">
-					<u-icon name="scan" color="#969799" size="28"></u-icon>
+					<u-icon name="erweima" color="#969799" size="56" custom-prefix="my-iconfont"></u-icon>
 				</view>
 				<view class="u-m-l-10 u-p-10">
-					<u-icon name="arrow-right" color="#969799" size="28"></u-icon>
+					<u-icon name="arrow-right" color="rgba(150, 151, 153,.5)" size="34"></u-icon>
 				</view>
 			</view>
 			
@@ -76,67 +79,64 @@
 
 			<view class="u-f-jsb u-p-l-32 u-p-r-32 itemBox click-able line u-m-t-20">
 				<view class="leftBox u-f u-f-jc">
-					<u-icon name="coupon" size="28" color="red"></u-icon>
-					<view class="marginL5 u-f-ajc">我的名片</view>
+					<u-icon name="mingpian" size="56" color="#6AC66F" custom-prefix="my-iconfont"></u-icon>
+					<view class="marginL10 u-f-ajc">我的名片</view>
 				</view>
 				<view class="rightBox">
-					<u-icon name="arrow-right" color="#969799" size="28"></u-icon>
+					<u-icon name="arrow-right" color="rgba(150, 151, 153,.5)" size="34"></u-icon>
 				</view>
 			</view>		
 
 			<view class="u-f-jsb u-p-l-32 u-p-r-32 itemBox line click-able">
 				<view class="leftBox u-f u-f-jc">
-					<u-icon name="coupon" size="28" color="red"></u-icon>
-					<view class="marginL5 u-f-ajc">红包</view>
+					<u-icon name="hongbao1" size="48" color="#F95731" custom-prefix="my-iconfont"></u-icon>
+					<view class="marginL10 u-f-ajc">红包</view>
 				</view>
 				<view class="rightBox">
-					<u-icon name="arrow-right" color="#969799" size="28"></u-icon>
+					<u-icon name="arrow-right" color="rgba(150, 151, 153,.5)" size="34"></u-icon>
 				</view>
 			</view>		
 
 			<view class="u-f-jsb u-p-l-32 u-p-r-32 itemBox line click-able">
 				<view class="leftBox u-f u-f-jc">
-					<u-icon name="coupon" size="28" color="red"></u-icon>
-					<view class="marginL5 u-f-ajc">收藏</view>
+					<u-icon name="shoucang27" size="56" color="#FF9542" custom-prefix="my-iconfont"></u-icon>
+					<view class="marginL10 u-f-ajc">收藏</view>
 				</view>
 				<view class="rightBox">
-					<u-icon name="arrow-right" color="#969799" size="28"></u-icon>
+					<u-icon name="arrow-right" color="rgba(150, 151, 153,.5)" size="34"></u-icon>
 				</view>
 			</view>			
 
 			<view class="u-f-jsb u-p-l-32 u-p-r-32 itemBox line click-able">
 				<view class="leftBox u-f u-f-jc">
-					<u-icon name="coupon" size="28" color="red"></u-icon>
-					<view class="marginL5">福利社</view>
+					<u-icon name="fuli" size="56" color="#F1BD2C" custom-prefix="my-iconfont"></u-icon>
+					<view class="marginL10 u-f-ajc">福利社</view>
 				</view>
 				<view class="rightBox">
-					<u-icon name="arrow-right" color="#969799" size="28"></u-icon>
+					<u-icon name="arrow-right" color="rgba(150, 151, 153,.5)" size="34"></u-icon>
 				</view>
 			</view>		
 
 			<view class="u-f-jsb u-p-l-32 u-p-r-32 itemBox click-able">
 				<view class="leftBox u-f u-f-jc">
-					<u-icon name="coupon" size="28" color="red"></u-icon>
-					<view class="marginL5">密码重置</view>
+					<u-icon name="shezhi" size="50" custom-prefix="my-iconfont" color="#4882D8"></u-icon>
+					<view class="marginL10 u-f-ajc">密码重置</view>
 				</view>
 				<view class="rightBox">
-					<u-icon name="arrow-right" color="#969799" size="28"></u-icon>
+					<u-icon name="arrow-right" color="rgba(150, 151, 153,.5)" size="34"></u-icon>
 				</view>
 			</view>									
 			
-			<!-- <u-cell-group class="u-m-t-20">
-				<u-cell-item icon="setting" title="设置"></u-cell-item>
-			</u-cell-group>					 -->
 
-			<view class="u-f-jsb u-p-l-32 u-p-r-32 itemBox click-able marginT20">
+			<!-- <view class="u-f-jsb u-p-l-32 u-p-r-32 itemBox click-able marginT20">
 				<view class="leftBox u-f u-f-jc">
-					<u-icon name="coupon" size="28" color="red"></u-icon>
-					<view class="marginL5">设置</view>
+					<u-icon name="shezhi" size="56" custom-prefix="my-iconfont" color="#4882D8"></u-icon>
+					<view class="marginL10 u-f-ajc">设置</view>
 				</view>
 				<view class="rightBox">
-					<u-icon name="arrow-right" color="#969799" size="28"></u-icon>
+					<u-icon name="arrow-right" color="rgba(150, 151, 153,.5)" size="34"></u-icon>
 				</view>
-			</view>		
+			</view>		 -->
 
 			<view class="loginOutBtn marginT20">
 				<u-button :custom-style="customBtnStyle" class="click-able" @click="handlerLoginOut">退出</u-button>
@@ -282,9 +282,17 @@
 			handlerLoginOut(){
 				this.confirm("确定退出吗？").then(res => {
 					debugger
-					console.log(res)
+					// console.log(res)
 					let resUrl = this.$findPageUrl("login")
-					this.togoPage(resUrl,{}, 'relaunch')
+					// this.togoPage(resUrl,{
+					// 	toPageUrl: '/pages/my/my',
+					// 	jumpType: 'switch'
+					// }, 'relaunch')
+
+					this.togoPage(resUrl, {
+						topageUrl: "/pages/my/my",
+						jumpType: "switch"
+					}, 'relaunch')
 				}).catch(res => {
 					debugger
 				})

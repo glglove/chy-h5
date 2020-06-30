@@ -13,7 +13,13 @@
 				<u-grid-item  :index="index" v-for="(item, index) in gridItems" :key="item.path" >
 					<div class="icon-list u-f-ajc" :style="{background: bgColor[index]}">
 						<!-- <icon-svg :icon-class="item.icon"></icon-svg> -->
-						<img :src="item.picUrl" alt="" class="itemPic">
+						<!-- <img :src="item.picUrl" alt="" class="itemPic"> -->
+						<u-icon 
+							:name="item.icon" 
+							:size="item.size" 
+							:color="item.color" 
+							custom-prefix="my-iconfont"
+						></u-icon>
 					</div>
 					<div class="text">{{item.name}}</div>					
 				</u-grid-item>
@@ -69,50 +75,64 @@
 						{
 							path: '/checkWork',
 							name: '考勤',
-							icon: 'notice',
+							icon: 'kaoqin',
+							color: '#ffffff',
+							size: 48,
 							picUrl: require('@/assets/pic/code.jpg'),
 							hidden: false,							
 						},
 						{
 							path: '/employee',
 							name: '员工',
-							icon: 'employee',
+							icon: 'yuangong',
+							color: '#ffffff',
+							size: 60,
 							picUrl: require('@/assets/pic/code.jpg'),
 							hidden: false,							
 						},
 						{
 							path: '/socialSecurity',
 							name: '社保',
+							color: '#ffffff',
+							size: 60,							
 							picUrl: require('@/assets/pic/code.jpg'),
-							icon: 'socialSecurity',
+							icon: 'shebao',
 							hidden: false,						
 						},							
 						{
 							path: '/platform',
 							name: '平台',
+							color: '#ffffff',
+							size: 60,							
 							picUrl: require('@/assets/pic/code.jpg'),
-							icon: 'platform',
+							icon: 'pingtai',
 							hidden: false,								
 						},
 						{
 							path: '/notice',
 							name: '公告',
+							color: '#ffffff',
+							size: 60,							
 							picUrl: require('@/assets/pic/code.jpg'),
-							icon: 'notice',
+							icon: 'gonggao1',
 							hidden: false,							
 						},
 						{
 							path: '/manage',
 							name: '管理',
 							picUrl: require('@/assets/pic/code.jpg'),
-							icon: 'manage',
+							icon: 'guanli',
+							color: '#ffffff',
+							size: 60,							
 							hidden: false,							
 						},
 						{
 							path: '/approvalFlow',
 							name: '审批',
 							picUrl: require('@/assets/pic/code.jpg'),
-							icon: 'notice',
+							icon: 'shenpi',
+							color: '#ffffff',
+							size: 60,							
 							hidden: false,							
 						}
 					]

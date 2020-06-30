@@ -1,23 +1,24 @@
 import store from '../store'
-import route from '../router/index.js'
+// import route from '../router/index.js'
+import Vue from 'vue'
 export const publicObj = {
-    hasLogin: (option, toPath) => {
-        if(store.getters.isLogin) {
-            return {
-                isLogin: true,
-                token: store.getters.token,
-                userInfo: store.getters.userInfo
-            }
-        }else {
-            // 跳转到 登陆页面
-            route.push({
-                path: '/login'
-            })            
-            return {
-                isLogin: false
-            }
-        }  
-    },
+    // hasLogin: (option, toPath) => {
+    //     if(store.getters.isLogin) {
+    //         return {
+    //             isLogin: true,
+    //             token: store.getters.token,
+    //             userInfo: store.getters.userInfo
+    //         }
+    //     }else {
+    //         // 跳转到 登陆页面
+    //         route.push({
+    //             path: '/login'
+    //         })            
+    //         return {
+    //             isLogin: false
+    //         }
+    //     }  
+    // },
     // 监测网络（移动端）
     _checkNetWork_mobile(){
         let netStatus = ''
@@ -47,5 +48,5 @@ export const publicObj = {
           document.addEventListener("netchange", onNetChange, false);  
         }
         document.addEventListener("plusready", onPlusReady, false);
-    },    
+    },  	     
 }

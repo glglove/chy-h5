@@ -50,6 +50,7 @@ import http from '@/utils/http.js'
 
 import findPageUrl from '@/utils/findPageUrl'
 
+import { _togoPage } from '@/utils/public'
 Vue.config.productionTip = false;
 
 // 挂载在 Vue实例的原型上
@@ -59,22 +60,36 @@ Vue.prototype.$store = store
 Vue.prototype.$bus = new Vue()
 Vue.prototype.$findPageUrl = findPageUrl
 // 原型上面 添加一个 监测登陆的方法
-Vue.prototype.checkLogin = function(toPageUrl, jumpType){
+Vue.prototype.$checkLogin = function(toPageUrl, jumpType){
 	// toPageUrl 为 需要跳转的地址   jumpType 为跳转的方式： 1:switch   2:redirect  3:relanch 4:navigate
 	let token = uni.getStorageSync("userToken")
 	if(token){
 		// 已登陆
+		// 可以返回 token等
+		return {
+			isLogin: true,
+			token
+		}		
 	}else {
-		// 未登陆 直接调到 登录页面
-		uni.redirectTo({
-			url:'/pages/login/login?toPageUrl=' + toPageUrl + '?jumpType=' + jumpType
-		})
-			
-		return false
-	}
-	// 最终可以返回 token等
-	return {
-		token
+		// 未登录
+		const whiteList = ['/pages/login/login']// 白名单
+		// 在免登录白名单，直接进入
+		if (whiteList.indexOf(toPageUrl) !== -1) { 
+			return {
+				isLogin: false,
+				token,
+				isWhiteList: true
+			}
+		}else {
+			uni.redirectTo({
+				url:'/pages/amos-login/login?toPageUrl=' + toPageUrl + '?jumpType=' + jumpType
+			})			
+			return {
+				isLogin: false,
+				token,
+				isWhiteList: false
+			}
+		}		
 	}
 }
 

@@ -27,7 +27,7 @@
       </yd-cell-item>
     </yd-cell-group>
     <yd-button-group>
-      <yd-button size="large" @click.native="handleLogin">登录</yd-button>
+      <!-- <yd-button size="large" @click.native="handleLogin">登录</yd-button> -->
     </yd-button-group>
   </div>
 </template>
@@ -35,6 +35,7 @@
 <script type="text/ecmascript-6">
   import * as config from 'api/config'
   import iconSvg from '@/base/Icon-svg/index'
+  import { mapActions } from 'vuex'
   export default {
     name: 'login',
     data () {
@@ -58,7 +59,7 @@
       },
       handleLogin () {
         this.$dialog.loading.open('正在登录...')
-        this.$store.dispatch('LoginByUsername', this.loginForm).then((res) => {
+        // this.$store.dispatch('LoginByUsername', this.loginForm).then((res) => {
           this.$dialog.loading.close()
           if (res === config.ERR_OK) {
             this.$router.replace({path: '/'})

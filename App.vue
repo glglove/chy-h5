@@ -13,6 +13,7 @@
 </script>
 
 <style lang="scss" rel="stylesheet/stylus">
+	@import "./assets/css/my-iconfont.css"; // 一定要放在 所有样式引入的最前面
 	/**H5 端 nprogress 进度条 颜色设置*/
 	#nprogress .bar {
       background: #00AEEF !important; //自定义颜色

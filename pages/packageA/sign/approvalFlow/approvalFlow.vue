@@ -11,9 +11,20 @@
     text-indent: 16upx;
     font-size: 32upx;
 }
+.u-grid-item-box {
+    .iconWrap {
+        width:100upx;
+        height:100upx;
+        border-radius: 10upx;
+        &:nth-of-type(1) {
+            background: #65C5F4;
+        }
+    }
+}
+
 .grid-text {
-    font-size: 28rpx;
-    margin-top: 4rpx;
+    font-size: 26rpx;
+    margin-top: 6rpx;
     color: $u-type-info;
     // color: red;
 }
@@ -26,15 +37,21 @@
             </view>
             <u-grid :col="4" @click="handlerClickCat">
                 <u-grid-item index="startLaunch">
-                    <u-icon name="photo" :size="92" color='red'></u-icon>
+                    <view class="iconWrap u-f-ajc" :style="{'background':'rgb(101, 197, 244)'}">
+                        <u-icon name="faqishenpi" size="44" color='#ffffff' custom-prefix="my-iconfont"></u-icon>
+                    </view>
                     <view class="grid-text">发起审批</view>
                 </u-grid-item>
                 <u-grid-item index="waitLaunch">
-                    <u-icon name="lock" :size="92" color='red'></u-icon>
+                    <view class="iconWrap u-f-ajc" :style="{'background':'rgb(101, 197, 244)'}">
+                        <u-icon name="daishenpi" size="68" color='#ffffff' custom-prefix="my-iconfont"></u-icon>
+                    </view>
                     <view class="grid-text">待办审批</view>
                 </u-grid-item>
                 <u-grid-item index="copyToMe">
-                    <u-icon name="hourglass" :size="92" color='red'></u-icon>
+                    <view class="iconWrap u-f-ajc" :style="{'background':'rgb(255, 142, 142)'}">
+                        <u-icon name="chaosongwode3" size="52" color='#ffffff' custom-prefix="my-iconfont"></u-icon>
+                    </view>                    
                     <view class="grid-text">抄送我的</view>
                 </u-grid-item>
             </u-grid>   
@@ -44,19 +61,27 @@
 
             <u-grid :col="4"  @click="handlerClickCat">
                 <u-grid-item index="onTheWay">
-                    <u-icon name="photo" :size="92" color='red'></u-icon>
+                    <view class="iconWrap u-f-ajc" :style="{'background':'rgb(101, 197, 244)'}">
+                        <u-icon name="zaitushebei" size="52" color='#ffffff' custom-prefix="my-iconfont"></u-icon>
+                    </view>                      
                     <view class="grid-text">在途</view>
                 </u-grid-item>
                 <u-grid-item index="myStart">
-                    <u-icon name="lock" :size="92" color='red'></u-icon>
+                    <view class="iconWrap u-f-ajc" :style="{'background':'rgb(52, 202, 214)'}">
+                        <u-icon name="wofaqide2" size="48" color='#ffffff' custom-prefix="my-iconfont"></u-icon>
+                    </view>                      
                     <view class="grid-text">我发起的</view>
                 </u-grid-item>
                 <u-grid-item index="myFollow">
-                    <u-icon name="hourglass" :size="92" color='red'></u-icon>
+                    <view class="iconWrap u-f-ajc" :style="{'background':'rgb(255, 142, 142)'}">
+                        <u-icon name="woguanzhude" size="48" color='#ffffff' custom-prefix="my-iconfont"></u-icon>
+                    </view>                         
                     <view class="grid-text">我关注的</view>
                 </u-grid-item>
                 <u-grid-item index="myPending">
-                    <u-icon name="hourglass" :size="92" color='red'></u-icon>
+                    <view class="iconWrap u-f-ajc" :style="{'background':'rgb(255, 158, 80)'}">
+                        <u-icon name="woguaqide" size="58" color='#ffffff' custom-prefix="my-iconfont"></u-icon>
+                    </view>                        
                     <view class="grid-text">我挂起的</view>
                 </u-grid-item>                
             </u-grid>                 

@@ -146,12 +146,12 @@ export const miniProApi = {
 		},
 		/*mescroll组件初始化的回调,可获取到mescroll对象 (此处可删,mixins已默认)*/
 		mescrollInit(mescroll) {
-			debugger
+			// debugger
 			this.mescroll = mescroll;
 		},				
 		/*mescroll下拉刷新的回调, 有三种处理方式:*/
 		downCallback(page){
-			debugger
+			// debugger
 			// 第1种: 请求具体接口
 			// uni.request({
 			// 	url: 'xxxx',
@@ -174,7 +174,7 @@ export const miniProApi = {
 		},		
 		/*mesroll上拉加载的回调*/
 		upCallback(page) {
-			debugger
+			// debugger
 			// console.log(this.upOption.page)
 			// let pageNum = page.num; // 页码, 默认从1开始
 			// let pageSize = page.size; // 页长, 默认每页10条
@@ -257,73 +257,115 @@ export const miniProApi = {
 				}				
 			})
 		},
-		// 封装的页面跳转带参数的
-		togoPage(url, data, togoType = 'navigate'){
-			// url 为不带参数的链接， togoType为跳转的方式：navigate,switch,redirect,relaunch
-			// data 为 传递的参数对象
+		// 当前页面的地址/上一个页面地址  注意：不要在 App.onLaunch 的时候调用 getCurrentPages()，此时page 还没有生成。
+		getPageUrl(flag = "current"){
+			if(flag === "current"){
+				// 当前页面
+				let pages = getCurrentPages()
+				let currentPage = pages[pages.length - 1] // 当前页面路径
+				return currentPage.options.toPageUrl
+			}else if(flag === "before"){
+				// 上一个页面
+				let beforePage = ''
+				let pages = getCurrentPages()
+				pages.length > 1 && pages[pages.length - 2] // 前一个页面路径
+				return currentPage.options.toPageUrl
+			}
+			
+		},
+		// 封装的页面跳转带参数的方法 （非登录页面的登录跳转页面可以用此方法）
+		// 注意： 页面登录页的 确认登录跳转 不能用 此方法	
+		togoPage(toPageUrl, params = {}, togoType = 'navigate'){
+			// toPageUrl 为不带参数的链接， togoType为跳转的方式：navigate,switch,redirect,relaunch
+			// params 为 传递的参数对象
+			debugger
+			var togo = () => {
+				// h5 端 使用 时 需要有页面顶部的进度条
+				//#ifdef H5
+				this.$NProgress.start()
+				//#endif
 
-			// 页面跳转时 需要验证是否登录
-			// if(){
-
-			// }
-			// h5 端 使用 时 需要有页面顶部的进度条
-			//#ifdef H5
-			this.$NProgress.start()
-			//#endif
-
-			function param (data) {
-				let urlParams = ''
-				for (var k in data) {
-				  let value = data[k] !== undefined ? data[k] : ''
-				  urlParams += '&' + k + '=' + encodeURIComponent(JSON.stringify(value))
+				function param (data) {
+					let urlParams = ''
+					for (var k in data) {
+					let value = data[k] !== undefined ? data[k] : ''
+					urlParams += '&' + k + '=' + encodeURIComponent(JSON.stringify(value))
+					}
+					return urlParams ? urlParams.substring(1) : ''
 				}
-				return urlParams ? urlParams.substring(1) : ''
+
+				toPageUrl += (toPageUrl.indexOf('?') < 0 ? '?' : '&') + param(params)
+		
+				// debugger
+				switch(togoType){
+					case 'navigate':
+						uni.navigateTo({  
+							url: toPageUrl
+						}) 
+						//#ifdef H5  
+						this.$NProgress.done()
+						//#endif					
+					break
+					case 'switch':
+						uni.switchTab({  
+							url: toPageUrl
+						}) 
+						//#ifdef H5  
+						this.$NProgress.done()
+						//#endif					
+					break
+					case 'redirect':
+						uni.redirectTo({  
+							url: toPageUrl
+						}) 
+						//#ifdef H5  
+						this.$NProgress.done()
+						//#endif					
+					break
+					case 'relaunch':
+						uni.reLaunch({  
+							url: toPageUrl
+						}) 
+						//#ifdef H5  
+						this.$NProgress.done()
+						//#endif					
+					break	
+					default: 
+						uni.navigateTo({  
+							url: toPageUrl
+						}) 	
+						//#ifdef H5  
+						this.$NProgress.done()
+						//#endif																				
+				}		
 			}
 
-			url += (url.indexOf('?') < 0 ? '?' : '&') + param(data)
-	
-			debugger
-			switch(togoType){
-				case 'navigate':
-					uni.navigateTo({  
-						url
-					}) 
-					//#ifdef H5  
-					this.$NProgress.done()
-					//#endif					
-				break
-				case 'switch':
-					uni.switchTab({  
-						url
-					}) 
-					//#ifdef H5  
-					this.$NProgress.done()
-					//#endif					
-				break
-				case 'redirect':
-					uni.redirectTo({  
-						url
-					}) 
-					//#ifdef H5  
-					this.$NProgress.done()
-					//#endif					
-				break
-				case 'relaunch':
-					uni.reLaunch({  
-						url
-					}) 
-					//#ifdef H5  
-					this.$NProgress.done()
-					//#endif					
-				break	
-				default: 
-					uni.navigateTo({  
-						url
-					}) 	
-					//#ifdef H5  
-					this.$NProgress.done()
-					//#endif																				
-			}		
+			if(toPageUrl.indexOf('/pages/amos-login/login') < 0 ){
+				// 需要跳转到非登录页面
+				console.log(this.getPageUrl("current"))
+				// 当前页不是 登录页面 此时跳转需要进行是否已登录验证
+				let res_checkLogin = this.$checkLogin(toPageUrl, togoType)
+				let res_checkLogin_isLogin = res_checkLogin.isLogin
+				if(res_checkLogin_isLogin){
+					// 已经登录，直接跳转
+					togo(toPageUrl, params, togoType)
+				}else {
+					// 未登录
+					if(res_checkLogin.isWhiteList){
+						// 免登录白名单
+						togo(toPageUrl, params, togoType)
+					}else {
+						// 不能跳转，弹出 未登录的提示框
+						this.confirm('您未登录,请先登录').then(res => {
+							debugger
+						})
+					}
+				}					
+			}else {
+				// 需要跳转到登录页面
+				togo(toPageUrl, params, togoType)
+			}
+			
 		},		
 		// 页面跳转
 		navigatePage ( url ) {
@@ -505,11 +547,11 @@ export const miniProApi = {
 			}
 		},
 		// alert 弹框
-		alert(title, duration = 2000) {
+		alert(title, duration = 2000, icon = true) {
 			let _this = this;
 			this.getDeviceApi().showToast({
 				title: title,
-				image: '../static/imgs/icon/alert.png',
+				icon: icon? require('@/static/imgs/icon/alert.png'): 'none',
 				mask: false,
 				duration: duration
 			});

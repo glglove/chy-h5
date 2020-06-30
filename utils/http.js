@@ -70,7 +70,7 @@ export default {
 		baseUrl: configs.baseUrl,
 		header: {
 			// 'Content-Type':'application/json;charset=UTF-8',  // 默认请求的content-Type 为 application/json
-			'Content-Type':'application/x-www-form-urlencoded'
+			'Content-Type':'application/x-www-form-urlencoded',
 		},  
 		timeout: 30000,
 		data: {},
@@ -88,25 +88,30 @@ export default {
 		// 默认统一的请求拦截函数
 		request: (configs) => {
 			// 将请求的参数中 默认增加 token
-			// debugger
-			console.log(configs)
+			debugger
 			let data = configs.data || {}
 			// 主要控制是否loading
 			let loading = configs.loading 
-			if( configs.url === `${configs.baseUrl}/users/register` || configs.url === `${configs.baseUrl}/app/customerApp/loginAndRegister` ){
-				// 小程序登陆接口 和app 注册登陆接口
+			if( configs.url === `${configs.baseUrl}/API/Account` ){
+				// 登陆接口
+				// 本地的登录接口logon  此时只需要传 商户码、用户名、密码 
+				configs.data = qs.stringify(data)
+				// debugger
+				// console.log(configs)				
 			}else {
 				// 非登录接口时 需要接口中 统一加上 token 属性（根据业务需求来定）
 				// let token = store.getters.userToken 
 				let token = '3DF72A5D-9522-41B9-8E16-FD7476A6A03F' 
 				if(token){
 					// token 存在 则 统一添加 token属性
-					configs.data = Object.assign(configs.data, {
-						// 'token': store.getters.userToken  // 从store 中 获取userToken 
-						'token': '3DF72A5D-9522-41B9-8E16-FD7476A6A03F',  // 从store 中 获取userToken 
-						'CompanyCode': 80000000,
-						'UserId': 5328
-					})  
+					configs.data = qs.stringify(
+						Object.assign(configs.data, {
+							// 'token': store.getters.userToken  // 从store 中 获取userToken 
+							'token': '3DF72A5D-9522-41B9-8E16-FD7476A6A03F',  // 从store 中 获取userToken 
+							'CompanyCode': 80000000,
+							'UserId': 5328
+						})  						
+					)
 				}else {
 					// 没有token 页面跳转到 到登陆页面
 					//#ifdef H5 || APP-PLUS
@@ -132,6 +137,8 @@ export default {
 					});
 					//#endif
 				}
+				// debugger
+				// console.log(configs)
 		  	}
 			// 请求时传入的 loading 为真，则需要显示
 			// debugger
@@ -315,7 +322,7 @@ export default {
 				// 非开发环境
 				console.log("【" + _config.requestId + "】 地址：" + _config.url)
 				if (_config.data) {
-					console.log("【" + _config.requestId + "】 参数：" + JSON.stringify(_config.data))
+					// console.log("【" + _config.requestId + "】 参数：" + JSON.stringify(_config.data))
 				}				
 			}
 

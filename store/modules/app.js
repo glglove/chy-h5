@@ -1,8 +1,9 @@
 
 import * as types from '../mutation-types'
-// import { copyFile } from 'fs';
-import commApi from '../../api/comm.js'
-
+import { getToken, setToken, removeToken } from '@/utils/auth'
+import {
+	loginByUsername
+} from '@/api/login'
 const app = {
   state: {
 	/**
@@ -25,19 +26,7 @@ const app = {
 	pHeight: '0',  // 页面的高度，minxin 中获取后 存入了 store中
 	socketStatus: false, // socket 连接状态
   },
-  mutations: {
-	// 登陆
-	login(state, userName) {
-		state.userName = userName || '新用户';
-		state.hasLogin = true;
-	},
-	// 登出
-	loginOut(state) {
-		state.userName = "";
-		state.hasLogin = false;
-		state.userToken = false;
-	},	  
-	
+  mutations: {  
 	 //设置 用户微信是否已授权用户信息userInfo
 	[types.setAuthorizeState] (state, {authorizeState, userInfo}) {
 		// debugger
@@ -82,46 +71,11 @@ const app = {
 	[types.saveWindowHeight] (state, pHeight) {
 		state.pHeight = pHeight
 	},
-	// 登陆
-	[types.LOGIN] ( state, opt ) {
-		debugger
-		let data = {
-			params: {
-				loginAccount: opt.name,
-				password: opt.password	 
-			}
-		}
-		commApi.appLoginAndRegister(data).then(res => {
-			debugger
-			console.log("store中 app登陆后返回的res", res)
-			if(res.statusCode === 200 && res.data.code === 1){
-				let token = res.data.data.token
-				let customer = res.data.data.customer
-				// token 存入store 中
-				state.userToken = token
-				state.userId = customer.id
-				state.hasLogin = true
-				// token 存入 localStorage 中 后续 app 启动后 通过 判断 localStorage 中是否有 这个 token 来判断是进入到 登陆页面还是 首页
-				uni.setStorage({
-					key: 'userToken',
-					data: token,
-					success: function(res) {
-						console.log(`app中'userToken' 存入localstorage成功`)
-						let res_token = uni.getStorageSync("userToken")
-						debugger
-						console.log("-----------",res_token)
-					},
-					fail: function(){
-						console.log(`app 中 'userToken'存入localStorge失败 `)
-					}
-				})
-			}			
-		})
-	},
 	// 设置socket 连接状态
 	[types.SET_SOCKET_STATUS](state, flag){
 		state.socketStatus = flag
 	},
+
   },
   actions: {
 	// 设置 用户微信是否已授权用户信息userInfo
@@ -139,10 +93,24 @@ const app = {
 	},	
 	// 登陆
 	login({commit, state}, opt = {}){
-		// return new Promise((resolve, reject) => {
-			debugger
-			commit( types.LOGIN, opt )
-		// })
+		debugger
+		let params = {
+			UserName: '',
+			pwd: '',
+			companyCode: ''	 
+		}
+		opt = Object.assign(params, opt)
+		return new Promise((resolve, reject) => {
+			loginByUsername(opt).then(response => {
+				debugger
+				const data = response.data.Data
+				setToken(response.data.Data.TokenId)
+				commit(types.setUserToken, data.TokenId)
+				resolve(response.data.State)				
+			}).catch(error => {
+				reject(error)
+			})
+		})
 	},
     // 设置用户token
     setUserToken ({ commit, state }, str) {

@@ -4,7 +4,7 @@ import http from '@/utils/http'
 export default {
 	/*
 	*
-    * @param {*} param 查询 所有课程列表信息
+    * @param {*} param 
     * @param {} loading  是否显示loading
 	* @param {} loadingText  loading 的文字
 	* 

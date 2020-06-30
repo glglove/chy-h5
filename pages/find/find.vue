@@ -1,22 +1,44 @@
 <style lang="less" scoped>
-	// uni-page-body {
-	// 	height: 100%
-	// }
+	uni-page-body {
+		height: 100%
+	}
+	/deep/.u-notice-text {
+		font-size: 24upx !important;
+	}
 	#findBox{
-		height: 100vh !important;
+		padding-bottom: calc(var(--window-bottom));
+		// background-color: rgba(255,255,255,1);
+		background-color: rgba(245,245,245,1);
 		.items {
-			padding: 40upx;
-			box-sizing: border-box;
+			background-color: #ffffff;
 			.item {
 				height: 150upx;
+				padding: 0 40upx;
+				box-sizing: border-box;
+				&:active {
+					background: rgba(242,242,242,.8)
+				}				
 				.left {
-					width: 200upx;
+					width: 80upx;
 
 				}
 				.right {
-					width: 600upx;
-					&.line {
-						border-bottom: 1px solid red
+					width: calc(100% - 40px);
+					padding: 0 20upx;
+					box-sizing: border-box;
+					.right-top {
+						.right-top-left {
+							font-size: 32upx;
+							color: #000000
+						}
+						.right-top-right {
+							font-size: 24upx;
+							color: #9d9d9d
+						}
+					}
+					.right-bottom {
+						font-size: 24upx;
+						color: #9d9d9d
 					}
 				}
 			}
@@ -41,17 +63,24 @@
 	}
 </style>
 <template>
-	<container>
-		<view  id="findBox" class="page" slot="container-slot">
+	<container
+		ref="containerCmp"
+		:containerAllloading="containerAllloading"
+		:containerLoading = "containerLoading"
+	>
+		<view  id="findBox" class="page animated fast fadeIn" slot="container-slot">
 			<!--loading组件-->
 			<!-- <Loading type="4"></Loading> -->
 			<!-- bg.find_bg:{{bg.find_bg}} -->
 			<!-- {{$configs.baseImgsUrl + $configs.baseUrlConfigs.imgs_bg.find_bg}} -->
 			<!--loading-->
 			<u-search placeholder="日照香炉生紫烟" v-model="searchKey"></u-search>
-			<i class="icon-cover my-iconfont">icon图标</i>
+			<!-- <u-icon name="rizhi" custom-prefix="my-iconfont">icon图标</u-icon>
+			<i class="my-iconfont-woguanzhude"></i> -->
+			<!-- <u-icon name="photo"></u-icon> -->
+
 			<!--已登录-->
-			<div v-if="!userToken" class="find-hasLogin">
+			<div v-if="userToken" class="find-hasLogin">
 				<mescroll-uni 
 					class="mescroll_contentList_wrap"
 					ref="mescrollRef" 
@@ -69,15 +98,29 @@
 							v-for="(item, index) in toolList"
 							:key="index">
 							<view class="left">
-								左边图标
+								<u-icon :name="item.iconName" size="76" custom-prefix="my-iconfont" :color="item.color"></u-icon>
 							</view>
-							<view class="right line">
+							<view class="right line u-f1 u-f-column u-f-jc">
 								<view class="right-top u-f-jsb">
-									<view class="right-top-left">消息通知</view>
+									<view class="right-top-left">
+										{{item.name}}
+										<u-badge 
+											:is-dot="false" 
+											:count="item.count" 
+											:offset="[]"
+										></u-badge>
+									</view>
 									<view class="right-top-right">下午4:00</view>
 								</view>
 								<view class="right-bottom ellipsis1">
-									消息通知已开通，请各位准时参加消息通知已开通，请各位准时参加消息通知已开通，请各位准时参加消息通知已开通，请各位准时参加
+									<u-notice-bar 
+										mode="horizontal" 
+										:list="item.content"
+										type="none"
+										:close-icon="false"
+										duration="2500"
+										:speed="50"
+									></u-notice-bar>
 								</view>
 							</view>
 						</view>
@@ -86,7 +129,7 @@
 			</div>
 			
 			<!---未登录-->
-			<view v-if="userToken" class="find-notLogin">
+			<view v-if="!userToken" class="find-notLogin">
                 <view class="title" @click="clickBtn">
                     您好 游客。
                 </view>
@@ -153,33 +196,53 @@
 				toolList: [
 					{
 						name: '消息通知',
-						img: 'xiaoxi',
+						iconName: 'xiaoxi1',
 						path: '',
-						color: '#51A1F9'
+						color: '#51A1F9',
+						count: 120,
+						content: [
+							'消息通知已开通，请各位准时参加消息通知已开通，请各位准时参加消息通知已开通，请各位准时参加消息通知已开通，请各位准时参加'
+						]
 					},
 					{
 						name: '工作提醒',
-						img: 'tixing',
+						iconName: 'tixing',
 						path: '',
-						color: '#34CAD6'
+						color: '#34CAD6',
+						count: 2,
+						content: [
+							'本周一全体员工到东区会议室开会，记得准时参加'
+						]
 					},
 					{
 						name: '审批提醒',
-						img: 'shenpi',
+						iconName: 'shenpi',
 						path: '',
-						color: '#FF8E8E'
+						color: '#FF8E8E',
+						count: 10,
+						content: [
+							'消息通知已开通，请各位准时参加消息通知已开通，请各位准时参加消息通知已开通，请各位准时参加消息通知已开通，请各位准时参加'
+						]
 					},
 					{
 						name: '日志提醒',
-						img: 'rizhi',
+						iconName: 'rizhi',
 						path: '',
-						color: '#75C2F4'
+						color: '#75C2F4',
+						count: 15,
+						content: [
+							'上次登陆时间2020.01.01，14：00'
+						]
 					},
 					{
 						name: '任务通知',
-						img: 'renwu',
+						iconName: 'renwu1',
 						path: '',
-						color: '#6FCA6C'
+						color: '#6FCA6C',
+						count: 0,
+						content: [
+							'您有新的审批任务待处理'
+						]
 					}
 				]				
 			};

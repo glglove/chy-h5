@@ -29,7 +29,8 @@
 			"path" : "pages/find/find",
 			"style" : {
 				"navigationBarTitleText":"发现",
-				"enablePullDownRefresh":false,				
+				"enablePullDownRefresh":false,	
+				"disableScroll": true, // 页面使用mescroll 时 禁止原生页面滚动, 解决Android小程序下拉卡顿的问题			
 				// "onReachBottomDistance": 50,
 				// 此设置属性是针对某一个具体的页面进行的 自定义导航栏设置
 				// "navigationStyle":"custom",   // 设置为 "custom" 后 将取消 原生导航栏，此时app 上会默认出现沉浸式 即通过打开应用的manifest.json文件，切换到代码视图，在app-plus -> statusbar 下添加immersed节点并设置值为false 可取消沉浸式
@@ -212,6 +213,7 @@
 			"style" : {
 				"navigationBarTitleText":"我的",
 				"enablePullDownRefresh":false,
+				"disableScroll": true, // 页面使用mescroll 时 禁止原生页面滚动, 解决Android小程序下拉卡顿的问题
 				"navigationStyle": "custom" ,// 隐藏系统导航栏
 				"navigationBarTextStyle": "white", // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一				
 				"app-plus":{

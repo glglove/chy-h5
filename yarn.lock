@@ -1126,7 +1126,7 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.npm.taobao.org/punycode/download/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha1-tYsBCsQMIsVldhbI0sLALHv0eew=
 
-qs@^6.7.0:
+qs@^6.9.4:
   version "6.9.4"
   resolved "https://registry.npm.taobao.org/qs/download/qs-6.9.4.tgz#9090b290d1f91728d3c22e54843ca44aea5ab687"
   integrity sha1-kJCykNH5FyjTwi5UhDykSupatoc=
@@ -1627,18 +1627,18 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-vuex-persistedstate@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.npm.taobao.org/vuex-persistedstate/download/vuex-persistedstate-3.0.1.tgz#6eacc3c416fe8cfe63c40d3ee7b8ed13aac4f04f"
-  integrity sha1-bqzDxBb+jP5jxA0+57jtE6rE8E8=
+vuex-persistedstate@^2.5.4:
+  version "2.7.1"
+  resolved "https://registry.npm.taobao.org/vuex-persistedstate/download/vuex-persistedstate-2.7.1.tgz#25ced829ea5789a2ed7d71a1ba057eb01a5235ad"
+  integrity sha1-Jc7YKepXiaLtfXGhugV+sBpSNa0=
   dependencies:
     deepmerge "^4.2.2"
     shvl "^2.0.0"
 
-vuex@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.npm.taobao.org/vuex/download/vuex-3.3.0.tgz#665b4630ea1347317139fcc5cb495aab3ec5e513"
-  integrity sha1-ZltGMOoTRzFxOfzFy0laqz7F5RM=
+vuex@^3.0.1:
+  version "3.4.0"
+  resolved "https://registry.npm.taobao.org/vuex/download/vuex-3.4.0.tgz#20cc086062d750769fce1febb34e7fceeaebde45"
+  integrity sha1-IMwIYGLXUHafzh/rs05/zurr3kU=
 
 when@~3.6.x:
   version "3.6.4"
