@@ -1,0 +1,10 @@
+@import "./reset.css";
+@import "./mixin.css";
+@import "./base.css";
+@import "./animate.css";
+
+
+html,body {
+    width: 100%;
+    height: 100%
+}

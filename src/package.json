@@ -1,0 +1,36 @@
+{
+  "name": "chy-gaol",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "h5": "cd F:/HBuilderX.2.7.14.20200618.full/HBuilderX/plugins/uniapp-cli/ && cross-env UNI_INPUT_DIR=$INIT_CWD/ UNI_OUTPUT_DIR=$INIT_CWD/unpackage/dist/dev/h5 UNI_PLATFORM=h5 NODE_ENV=development node bin/uniapp-cli.js",
+    "app": "cd F:/HBuilderX.2.7.14.20200618.full/HBuilderX/plugins/uniapp-cli/ && cross-env UNI_INPUT_DIR=$INIT_CWD/ UNI_OUTPUT_DIR=$INIT_CWD/unpackage/dist/dev/app-plus UNI_PLATFORM=app-plus NODE_ENV=development node bin/uniapp-cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glglove/chy-h5.git"
+  },
+  "author": "gaol",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/glglove/chy-h5/issues"
+  },
+  "homepage": "https://github.com/glglove/chy-h5#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "nprogress": "^0.2.0",
+    "qs": "^6.9.4",
+    "socket.io-client": "^2.3.0",
+    "stylus": "^0.54.7",
+    "stylus-loader": "^3.0.2",
+    "uview-ui": "^1.3.4",
+    "vuex": "^3.0.1",
+    "vuex-persistedstate": "^2.5.4"
+  },
+  "devDependencies": {
+    "node-sass": "^4.14.1",
+    "sass-loader": "^8.0.2"
+  }
+}
