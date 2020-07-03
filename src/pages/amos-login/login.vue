@@ -96,16 +96,18 @@
 		computed: {
 			
 		},
-		onLoad(option) {
+		onLoad(options) {
 			debugger
-			try {
-				let toPageUrl = JSON.parse(decodeURIComponent(options.toPageUrl))
-				let jumpType = JSON.parse(decodeURIComponent(option.jumpType))
+			if(options.toPageUrl){
+				this.toPageUrl = options.toPageUrl
 
-				toPageUrl && (this.toPageUrl = toPageUrl)
-				toPageUrl && jumpType && (this.jumpType = jumpType)
-			} catch (error) {
-				
+				if(options.jumpType){
+					this.jumpType = options.jumpType
+				}else {
+					// 地址中没有 jumpType 参数
+				}					
+			}else {
+				// 地址中没有 toPageUrl参数信息
 			}
 			_this= this;
 		},
@@ -131,7 +133,7 @@
 				// }
 			},
 		    startLogin(){
-				debugger
+				// debugger
 				//登录
 				if(this.isRotate){
 					//判断是否加载中，避免重复点击请求
@@ -149,27 +151,13 @@
 				
 				_this.isRotate=true
 
-				debugger
+				// debugger
 				//调用登陆的方法
 				this.login(this.userData).then(res => {
-					debugger
+					// debugger
 					if(res == 0){
 						// 登陆成功
-						// this.togoPage(this.toPageUrl, {}, this.jumpType)
-						switch(this.jumpType){
-							case 'navigate':
-								this.navigatePage(this.toPageUrl)
-								break
-							case 'switch':
-								this.switchPage(this.toPageUrl)
-								break
-							case 'relaunch':
-								this.relaunchPage(this.toPageUrl)
-								break
-							case 'redirect':
-								this.redirectPage(this.toPageUrl)
-								break
-						}
+						this.togoPage(this.toPageUrl, {}, this.jumpType)
 					}else {
 						// 登陆失败
 						this.toast("登录失败，请检查账号")
