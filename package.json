@@ -56,11 +56,14 @@
     "flyio": "^0.6.2",
     "less-loader": "^6.1.3",
     "regenerator-runtime": "^0.12.1",
+    "node-sass": "^4.14.1",
     "sass-loader": "^8.0.2",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "vue": "^2.6.11",
-    "vuex": "^3.2.0"
+    "vuex": "^3.2.0",
+    "vuex-persistedstate": "^2.5.4",     
+    "uview-ui": "^1.3.4"     
   },
   "devDependencies": {
     "@dcloudio/types": "*",
@@ -80,9 +83,12 @@
     "jest": "^25.4.0",
     "mini-types": "*",
     "miniprogram-api-typings": "*",
-    "node-sass": "^4.14.1",
     "postcss-comment": "^2.0.0",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "axios": "^0.19.2",
+    "nprogress": "^0.2.0",
+    "qs": "^6.9.4",
+    "socket.io-client": "^2.3.0" 
   },
   "browserslist": [
     "Android >= 4",
