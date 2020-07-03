@@ -149,14 +149,8 @@
 	// 引入mescroll-mixins.js
 	// import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js"
 	import uActionSheet from "uview-ui/components/u-action-sheet/u-action-sheet.vue";
-	import photoPng from '@/static/imgs/icon/photo.png'
-	import setPng from '@/static/imgs/icon/set.png'
-	import cardPng from '@/static/imgs/icon/card.png'
-	import achievementPng from '@/static/imgs/icon/achievement.png'
-	import recordPng from '@/static/imgs/icon/record.png'
-	import forwardRightPng from '@/static/imgs/icon/forward-right.png'
-	import helpPng from '@/static/imgs/icon/help.png'
-	import invitationPng from '@/static/imgs/icon/invitation.png'	
+	import photoPng from '@/static/imgs/icon/photo.png'	
+	import { getStorageSync, setStorage, removeStorage } from '@/utils/auth'
 	
 	// import FooterExplain from '@/pages/components/footerExplain/footerExplain'
 
@@ -284,15 +278,13 @@
 					debugger
 					// console.log(res)
 					let resUrl = this.$findPageUrl("login")
-					// this.togoPage(resUrl,{
-					// 	toPageUrl: '/pages/my/my',
-					// 	jumpType: 'switch'
-					// }, 'relaunch')
-
 					this.togoPage(resUrl, {
-						topageUrl: "/pages/my/my",
+						toPageUrl: "/pages/my/my",
 						jumpType: "switch"
-					}, 'relaunch')
+					}, 'relaunch').then(res => {
+						// 退出成功 删除 storage 和  vuex 中的token等
+						this.loginOut()	
+					})
 				}).catch(res => {
 					debugger
 				})

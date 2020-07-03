@@ -263,109 +263,140 @@ export const miniProApi = {
 				// 当前页面
 				let pages = getCurrentPages()
 				let currentPage = pages[pages.length - 1] // 当前页面路径
-				return currentPage.options.toPageUrl
+				return currentPage.route
 			}else if(flag === "before"){
 				// 上一个页面
 				let beforePage = ''
 				let pages = getCurrentPages()
 				pages.length > 1 && pages[pages.length - 2] // 前一个页面路径
-				return currentPage.options.toPageUrl
+				return currentPage.route
 			}
 			
 		},
-		// 封装的页面跳转带参数的方法 （非登录页面的登录跳转页面可以用此方法）
-		// 注意： 页面登录页的 确认登录跳转 不能用 此方法	
+		// 封装的页面跳转带参数的方法 	
 		togoPage(toPageUrl, params = {}, togoType = 'navigate'){
 			// toPageUrl 为不带参数的链接， togoType为跳转的方式：navigate,switch,redirect,relaunch
 			// params 为 传递的参数对象
-			debugger
-			var togo = () => {
-				// h5 端 使用 时 需要有页面顶部的进度条
-				//#ifdef H5
-				this.$NProgress.start()
-				//#endif
-
-				function param (data) {
-					let urlParams = ''
-					for (var k in data) {
-					let value = data[k] !== undefined ? data[k] : ''
-					urlParams += '&' + k + '=' + encodeURIComponent(JSON.stringify(value))
+			// debugger
+			return new Promise ((resolve, reject) => {
+				var togo = (toPageUrl, params, togoType) => {
+					// h5 端 使用 时 需要有页面顶部的进度条
+					//#ifdef H5
+					this.$NProgress.start()
+					//#endif
+	
+					function param (data) {
+						let urlParams = ''
+						let keyArr = Object.keys(data)
+						if(keyArr.length == 0){
+							// data 为 {}
+						}else {
+							// data 非 空
+							for (var k in data) {
+								let value = data[k] !== undefined ? data[k] : ''
+								// 地址栏中将 value进行了 编码处理，进而获取 此参数后需要 decodeURIComponent()进行解码
+								// urlParams += '&' + k + '=' + encodeURIComponent(JSON.stringify(value))
+								urlParams += '&' + k + '=' +  value
+							}
+						}
+						return urlParams ? urlParams.substring(1) : ''
 					}
-					return urlParams ? urlParams.substring(1) : ''
-				}
-
-				toPageUrl += (toPageUrl.indexOf('?') < 0 ? '?' : '&') + param(params)
-		
-				// debugger
-				switch(togoType){
-					case 'navigate':
-						uni.navigateTo({  
-							url: toPageUrl
-						}) 
-						//#ifdef H5  
-						this.$NProgress.done()
-						//#endif					
-					break
-					case 'switch':
-						uni.switchTab({  
-							url: toPageUrl
-						}) 
-						//#ifdef H5  
-						this.$NProgress.done()
-						//#endif					
-					break
-					case 'redirect':
-						uni.redirectTo({  
-							url: toPageUrl
-						}) 
-						//#ifdef H5  
-						this.$NProgress.done()
-						//#endif					
-					break
-					case 'relaunch':
-						uni.reLaunch({  
-							url: toPageUrl
-						}) 
-						//#ifdef H5  
-						this.$NProgress.done()
-						//#endif					
-					break	
-					default: 
-						uni.navigateTo({  
-							url: toPageUrl
-						}) 	
-						//#ifdef H5  
-						this.$NProgress.done()
-						//#endif																				
-				}		
-			}
-
-			if(toPageUrl.indexOf('/pages/amos-login/login') < 0 ){
-				// 需要跳转到非登录页面
-				console.log(this.getPageUrl("current"))
-				// 当前页不是 登录页面 此时跳转需要进行是否已登录验证
-				let res_checkLogin = this.$checkLogin(toPageUrl, togoType)
-				let res_checkLogin_isLogin = res_checkLogin.isLogin
-				if(res_checkLogin_isLogin){
-					// 已经登录，直接跳转
-					togo(toPageUrl, params, togoType)
-				}else {
-					// 未登录
-					if(res_checkLogin.isWhiteList){
-						// 免登录白名单
-						togo(toPageUrl, params, togoType)
-					}else {
-						// 不能跳转，弹出 未登录的提示框
-						this.confirm('您未登录,请先登录').then(res => {
-							debugger
-						})
-					}
-				}					
-			}else {
-				// 需要跳转到登录页面
-				togo(toPageUrl, params, togoType)
-			}
+	
+					toPageUrl += (toPageUrl.indexOf('?') < 0 ? '?' : '&') + param(params)
 			
+					console.log("将要跳转的地址及参数信息----------", toPageUrl)
+					switch(togoType){
+						case 'navigate':
+							uni.navigateTo({  
+								url: toPageUrl
+							}) 
+							resolve()
+							//#ifdef H5  
+							this.$NProgress.done()
+							//#endif					
+						break
+						case 'switch':
+							uni.switchTab({  
+								url: toPageUrl
+							}) 
+							resolve()
+							//#ifdef H5  
+							this.$NProgress.done()
+							//#endif					
+						break
+						case 'redirect':
+							uni.redirectTo({  
+								url: toPageUrl
+							}) 
+							resolve()
+							//#ifdef H5  
+							this.$NProgress.done()
+							//#endif					
+						break
+						case 'relaunch':
+							uni.reLaunch({  
+								url: toPageUrl
+							}) 
+							resolve()
+							//#ifdef H5  
+							this.$NProgress.done()
+							//#endif					
+						break	
+						default: 
+							uni.navigateTo({  
+								url: toPageUrl
+							}) 	
+							resolve()
+							//#ifdef H5  
+							this.$NProgress.done()
+							//#endif																				
+					}		
+				}
+	
+				if(toPageUrl.indexOf('/pages/amos-login/login') < 0 ){
+					// 需要跳转到非登录页面
+					console.log("跳转前的页面地址--------:", this.getPageUrl("current"))
+					let currentPageUrl = '/' + this.getPageUrl("current")
+					// 当前页不是 登录页面 此时跳转需要进行是否需要登录后才能进行
+					this.$checkLogin(toPageUrl, togoType).then(res => {
+						// debugger
+						let res_checkLogin_isLogin = res.isLogin
+						// 白名单
+						let res_checkLogin_isWhiteList = res.isWhiteList
+						if(res_checkLogin_isWhiteList){
+							// 跳转的页面是免登录页面
+							togo(toPageUrl, params, togoType)
+						}else {
+							// 跳转的页面是必须要登录的页面
+							if(res_checkLogin_isLogin){
+								// 已经登录，直接跳转
+								togo(toPageUrl, params, togoType)
+							}else {
+								// 未登录
+								if(currentPageUrl.indexOf('/pages/amos-login/login')< 0){
+									// 当前页面为非登录页面
+									// 不能跳转，弹出 未登录的提示框
+									this.confirm('您未登录,请先登录').then(res => {
+										if(res == 0){
+											// 点击了确认按钮,跳转到 登录页面
+											let res_page = this.$findPageUrl("login")
+											togo(res_page, {}, 'navigate')
+										}else if (res == 1){
+											// 点击了取消按钮
+										}
+									})
+								}else {
+									// 当前页面为登录页面，此时不需要 登录（本来就还未登录）,直接跳转
+									togo(toPageUrl, params, togoType)
+								}						
+							}	
+						}
+					})				
+				}else {
+					// 需要跳转到登录页面
+					togo('/pages/amos-login/login', params, togoType)
+				}
+			})
 		},		
 		// 页面跳转
 		navigatePage ( url ) {
@@ -578,31 +609,46 @@ export const miniProApi = {
 			}
 		},
 		// 设置localstorage 
-		setStorage ( key , val ) {
+		setStorage ( key , val, type = 2 ) {
 			debugger
-			if( key ) {
-			  // 成功返回 customer
-			  uni.setStorage({
-				key: key,
-				data: val ,
-				success: function(res){
-				  // success
-				  console.log(`---localStorage已成功存入 ${key}---值为：`,val)          
-				},
-				fail: function() {
-				  // fail
-				  console.log("localStorage存入数据失败！")          
-				},
-				complete: function() {
-				  // complete
-				}
-			  })
-			} 
+			debugger
+			switch (type){
+			  // type 1 表示 异步设置
+			  case 1:
+				uni.setStorage({
+				  key: key,
+				  data: val ,
+				  success: function(res){
+					// success
+					console.log(`---localStorage已成功存入 ${key}---值为：`,val)          
+				  },
+				  fail: function() {
+					// fail
+					console.log("localStorage存入数据失败！")          
+				  },
+				  complete: function() {
+					// complete
+				  }
+				}) 
+			  break
+			  case 2:
+				// type 2 表示 同步设置
+				if( key ) {
+				  try {
+					// 同步设置 storage
+					uni.setStorageSync( key,val ) 
+				  } catch (error) {
+					
+				  }
+				}       
+			  break
+			}  
 		},
 		// 提取localstorage
 		getStorage( key ) {
 			return new Promise((resolve,reject)=>{
 				try{
+					// 同步取 storage
 					let res = uni.getStorageSync(key);
 					resolve( res )
 				}catch(e){
@@ -615,41 +661,32 @@ export const miniProApi = {
 			switch (type){
 				// type 1 表示 异步删除
 				case 1:
-					this.getDeviceApi().removeStorage({
-					  key: key,
-					  success: function(res){
-						// success
-						console.log(`localStorage删除${key}成功`)          
-					  },
-					  fail: function() {
-						// fail
-						console.log(`localStorage删除[${key}]失败`)          
-					  },
-					  complete: function() {
-						// complete
-					  }
-					})    				
+				  uni.removeStorage({
+					key: key,
+					success: function(res){
+					  // success
+					  console.log(`localStorage删除${key}成功`)          
+					},
+					fail: function() {
+					  // fail
+					  console.log(`localStorage删除[${key}]失败`)          
+					},
+					complete: function() {
+					  // complete
+					}
+				  })    				
 				break;
 				// type 2 表示 同步删除
 				case 2:
-					this.getDeviceApi().removeStorageSync({
-					  key: key,
-					  success: function(res){
-						// success
-						console.log(`localStorage删除${key}成功`)          
-					  },
-					  fail: function() {
-						// fail
-						console.log(`localStorage删除[${key}]失败`)          
-					  },
-					  complete: function() {
-						// complete
-					  }						
-					})
-					break;
+				  try {
+					uni.removeStorageSync(key)
+				  } catch (error) {
+					
+				  }
+				  break;
 				default:
 				break;
-			}
+			  }
     	},
 		// 判断是否 isundefined
 		isUndefined(item) {

@@ -403,7 +403,8 @@
 					// 	break	
 				}
 				let resPath = this.$findPageUrl(path)
-				this.navigatePage(resPath)					
+				// this.navigatePage(resPath)
+					this.togoPage(resPath, {}, "navigate")				
 			},
 			/*mescroll下拉刷新的回调, 有三种处理方式:*/
 			downCallback1(){

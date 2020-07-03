@@ -1,6 +1,6 @@
 
 import * as types from '../mutation-types'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getStorageSync, setStorage, removeStorage } from '@/utils/auth'
 import {
 	loginByUsername
 } from '@/api/login'
@@ -48,9 +48,12 @@ const app = {
 	// 设置用户 token
     [types.setUserToken] (state, str) {
 		// debugger
-		debugger
 		state.userToken = str
-		state.hasLogin = true
+		if(str){
+			state.hasLogin = true
+		}else {
+			state.hasLogin = false
+		}
     },
 	// 设置 loading状态
 	[types.setContainerLoadingFlag] (state, flag ) {
@@ -93,7 +96,7 @@ const app = {
 	},	
 	// 登陆
 	login({commit, state}, opt = {}){
-		debugger
+		// debugger
 		let params = {
 			UserName: '',
 			pwd: '',
@@ -104,13 +107,18 @@ const app = {
 			loginByUsername(opt).then(response => {
 				debugger
 				const data = response.data.Data
-				setToken(response.data.Data.TokenId)
+				setStorage("userToken", response.data.Data.TokenId)
 				commit(types.setUserToken, data.TokenId)
 				resolve(response.data.State)				
 			}).catch(error => {
 				reject(error)
 			})
 		})
+	},
+	// 登出
+	loginOut({commit, state}) {
+		removeStorage("userToken", '')
+		commit(types.setUserToken, '')
 	},
     // 设置用户token
     setUserToken ({ commit, state }, str) {

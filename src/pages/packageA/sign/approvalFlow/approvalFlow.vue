@@ -107,7 +107,7 @@ export default  {
         handlerClickCat(str){
             // debugger
             let resUrl = this.$findPageUrl(str)
-            this.togoPage(resUrl)
+            this.togoPage(resUrl, {}, "navigate")
             // this.$refs.containerCmp.$refs.uToast.show({
             //     title: '正在加载',
             //     type: 'default',

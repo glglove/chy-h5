@@ -7,14 +7,19 @@
 
 </style>
 <template>
-    <container>
-        <view id="checkWork" class="page" slot="container-slot">
+    <container
+        :containerAllloading="containerAllloading"
+        :containerLoading = "containerLoading"
+        ref="containerCmp"
+    >
+        <view id="checkWork" class="page animated fadeInLeft fast" slot="container-slot">
             考勤页面
         </view>
     </container>
 </template>
 
 <script>
+
 export default  {
     data(){
         return {

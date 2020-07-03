@@ -1,4 +1,8 @@
 module.exports = {
+    externals: {
+      // "BMap": "BMap" 
+      "AMap": "AMap", // 配置的使用高德地图
+    },
     // 基本路径
     baseUrl: '/',
     // 输出文件目录
