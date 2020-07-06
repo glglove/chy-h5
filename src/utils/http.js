@@ -1,3 +1,4 @@
+/*******************以下为axios配置（不适合uniapp的多端请求）*************************************************************************** */
 // import axios from 'axios'
 // // 创建axios实例
 // const http = axios.create({
@@ -21,13 +22,12 @@
 
 // export {http}
 
-//-------------up is axios ---------
+/*******************以上为axios配置（不适合uniapp的多端请求）*************************************************************************** */
+
 
 import qs from 'qs'
 import store from '@/store/index.js'
-// import { configs } from '@/api/config'
 let configs = require('@/api/configs')
-console.log(configs)
 // debugger
 /**
  * 通用uni-app网络请求

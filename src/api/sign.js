@@ -1,7 +1,6 @@
 
 import http from '@/utils/http'
-
-export default {
+import base from './base'
 	/*
 	*
     * @param {*} param 
@@ -9,7 +8,7 @@ export default {
 	* @param {} loadingText  loading 的文字
 	* 
 	*/
-	async StartList (params = {}, loading = false, loadingText = "加载中...") {
+	export function StartList (params = {}, loading = false, loadingText = "加载中...") {
 		// debugger
 	   const url = `/WorkFlow`;
 	   var data = {
@@ -22,5 +21,4 @@ export default {
 		   loading,
 		   loadingText
 	   })
-	},				
-}
+	}			

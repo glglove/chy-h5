@@ -1,10 +1,20 @@
-const miniproConfings = {
-    miniproAppid: 'wx224bd53fdc4dd933', // 小程序appid
-    miniproSecret: 'e93ec56f5785d73760577dbf4b05ab7f', // 小程序secret
-    version: 'v20190805', // 小程序版本号
-  }
+import * as aitrsConfig from '@/api/config'
 
- const urls = {
+const miniproConfings = {
+  miniproAppid: 'wx224bd53fdc4dd933', // 小程序appid
+  miniproSecret: 'e93ec56f5785d73760577dbf4b05ab7f', // 小程序secret
+  version: 'v20190805', // 小程序版本号
+}
+
+// 高德地图配置
+const amapConfigs = {
+  aitras_wechat: 'a31da700fd3cb4c6ffc07b55cf7fe231', //高德地图小程序 key
+  aitras_web: 'ac422fe51a1585908098bd3758713e46', // 高德地图 web端 key
+  version: 'v20200706'
+}
+
+// 接口地址配置
+const urls = {
 	//生产
 		// gateway: "http://192.168.1.104:5000",  // 
 		gateway: "https://www.caihuiyun.cn",  // 
@@ -18,8 +28,9 @@ const miniproConfings = {
 		  pic_bg_Url: "https://www.kaoyandaka.com",
         wsUrl: "ws://127.0.0.1:5000",   // socket 本地服务器地址
 		// wsUrl: "wss://www.gaolongweb.cn",   // socket 生产环境服务器地址
- }
+}
 
+// 图片地址配置
  const urlConfigs = {
       // login: '/categories',  // 登陆
       // loginOut: '/categories',  // 登出
@@ -87,12 +98,15 @@ const miniproConfings = {
       uploadSound: '/fileMappedApp/upload', //上传音频文件
       shareImg: '/customerApp/shareImg',  // 分享
 }
- module.exports = {
+
+module.exports = {
   miniproConfings: miniproConfings,  // 小程序配置（appid、secret）
+  aitrsConfig:aitrsConfig, 
+  amapConfigs:amapConfigs, // 高德地图 配置
   baseUrl: urls.gateway,        // 小程序入口地址
   wsUrl: urls.wsUrl, // socket 地址
   baseImgsUrl: urls.pic_bg_Url, // 背景图片
   baseUrlConfigs: urlConfigs,   // 接口名称
   // loginUrl: urls.gateway + "/login" ,  // 登陆接口地址
   // filesUrl: urls.gateway + "/FilesMgr" // 文件地址
- }
+}

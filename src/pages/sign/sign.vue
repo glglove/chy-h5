@@ -1,6 +1,8 @@
 <template>
-	<container :containerLoading="containerLoading">
-		<view id="sign" class="page content" slot="container-slot">
+	<container 
+		:containerLoading="containerLoading"
+	>
+		<view id="sign" class="page content u-skeleton" slot="container-slot">
 			
 			<!--轮播图-->
 			<view class="box">		
@@ -11,7 +13,8 @@
 			</div>
 			<u-grid :col="4" @click="handerClickItem">
 				<u-grid-item  :index="index" v-for="(item, index) in gridItems" :key="item.path" >
-					<div class="icon-list u-f-ajc" :style="{background: bgColor[index]}">
+					<!--u-skeleton-fillet 绘制圆角矩形-->
+					<div class="icon-list u-f-ajc u-skeleton-fillet" :style="{background: bgColor[index]}">
 						<!-- <icon-svg :icon-class="item.icon"></icon-svg> -->
 						<!-- <img :src="item.picUrl" alt="" class="itemPic"> -->
 						<u-icon 
@@ -21,7 +24,8 @@
 							custom-prefix="my-iconfont"
 						></u-icon>
 					</div>
-					<div class="text">{{item.name}}</div>					
+					<!--u-skeleton-rect 绘制矩形-->
+					<div class="text u-skeleton-rect">{{item.name}}</div>					
 				</u-grid-item>
 			</u-grid>
 
@@ -40,11 +44,9 @@
 					</view>
 				</mescroll-uni>				
 			</view> -->
-
-		</view>
-
-		<!--引用骨架屏组件-->
-		<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>		
+			<!--引用骨架屏组件-->
+			<u-skeleton :loading="loading" :animation="true" bgColor="#ffffff" elColor="#fbfaf9"></u-skeleton>	
+		</view>			
 	</container>		
 </template>
 
@@ -317,7 +319,7 @@
 			// 通过延时模拟向后端请求数据，调隐藏骨架屏
 			setTimeout(() => {
 				this.loading = false;
-			}, 5000)
+			}, 2000)
 		},
 		onShow() {
 
