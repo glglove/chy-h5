@@ -50,8 +50,11 @@
                 id="dataList"
             >    
                 <view class="wrap">
-                    <u-swipe-action :show="item.show" :index="index" 
-                        v-for="(item, index) in list" :key="item.id" 
+                    <u-swipe-action 
+						:show="item.show" 
+						:index="index" 
+                        v-for="(item, index) in list" 
+						:key="item.id" 
                         @click="click" @open="open"
                         :options="options"
                     >
@@ -64,7 +67,7 @@
                         </view>
                     </u-swipe-action>
                 </view>
-            </mescroll-uni>
+            </mescroll-uni>		
         </view>
     </container>
 </template>

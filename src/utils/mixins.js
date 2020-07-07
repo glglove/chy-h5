@@ -21,7 +21,8 @@ export const miniProApi = {
 		return {
 			REQ_OK: REQ_OK,
 			pHeight: 0, // container 组件的 高，从系统中获取
-			showEmptyPage: false, // 是否显示empty页面		emptyType: 'data', //car 、page、search、address、wifi、order、coupon、favor、permission、history、news、message、list、data
+			showEmptyPage: false, // 是否显示empty页面		
+			emptyType: 'data', //car 、page、search、address、wifi、order、coupon、favor、permission、history、news、message、list、data
 			emptyText: '暂无数据', // empty页面显示的文字
 			showEmptyPageBtn: true, // empty页面是否显示操作按钮
 			showBtnType: 1, // 1 是返回按钮 2 是重新刷新按钮

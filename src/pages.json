@@ -264,6 +264,21 @@
             }			
 		},
 		{
+			"path" : "pages/packageA/find/searchHistory/searchHistory",
+			"style" : {
+				"navigationBarTitleText":"搜索记录",
+				"enablePullDownRefresh":true,
+				"disableScroll": true, // 禁止原生页面滚动, 解决Android小程序下拉卡顿的问题
+				// "navigationStyle": "custom" ,// 隐藏系统导航栏
+				"navigationBarTextStyle": "white", // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一				
+				"app-plus":{
+					//#ifdef H5
+					"titleNView": true  // 设置为 false 不启用 原生导航
+					//#endif	
+				}
+			}
+		},		
+		{
 			"path" : "pages/packageA/find/lessonList/index",
 			"style" : {
 				"navigationBarTitleText":"课程"
@@ -608,8 +623,8 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "rgba(253,133,9,1)"
-		//#ifdef  H5 ||APP-PLUS
+		"navigationBarBackgroundColor": "rgba(0,174,239,1)"
+		//#ifdef  H5 || APP-PLUS
 		,"backgroundColor": "rgba(254,147,82,.01)"
 		//#endif
 		//#ifdef MP-WEIXIN

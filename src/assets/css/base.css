@@ -263,6 +263,10 @@ body {
   line-height: 180%;
 }
 
+/***设置sticky的样式***/
+.u-sticky {
+    left: 0 !important
+}
 
 /*设置滚动条的样式 pc 样式*/
 /* ::-webkit-scrollbar {

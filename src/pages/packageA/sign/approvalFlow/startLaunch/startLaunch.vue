@@ -17,6 +17,11 @@
     .collapse-item {
         color: #9d9d9d;
     }
+    .sticky {
+        height: 100rpx;
+        width: 750rpx;
+        background-color: #fff;        
+    }
 }
 </style>
 <template>
@@ -27,33 +32,31 @@
     >
         <view id="startLaunch" slot="container-slot" class="page animated fadeInLeft fast">
             <!-- itemList： {{itemList}} -->
-            <!-- <u-sticky :offset-top="statusBarHeight + navbarHeight"> -->
-                <u-collapse class="collapseWrap">
-                    <u-collapse-item 
-                        :title="item.Name" 
-                        v-for="(item, index) in itemList" 
-                        :key="index"
-                        :index="index"
-                    >
-                        <u-card 
-                            :title='item.BusinessAreaCode' 
-                            sub-title="副标题">
-                            <view class="" slot="body" >
-                                <view 
-                                    class="collapse-item click-able"
-                                    :class="{'u-m-t-20 u-m-b-20': key!=0 && key!=(item.Flows.length-1)}"
-                                    v-for="(flow, key) in item.Flows"
-                                    :key="key"
-                                    @click="handlerClickFlowItem(key, flow)"
-                                >
-                                    {{flow.Name}}
-                                </view>                    
-                            </view>
-                            <!-- <view class="" slot="foot"><u-icon name="chat-fill" size="34" color="" label="30评论"></u-icon></view> -->
-                        </u-card>                
-                    </u-collapse-item>
-                </u-collapse>   
-            <!-- </u-sticky>                     -->
+            <u-collapse class="collapseWrap">
+                <u-collapse-item 
+                    :title="item.Name" 
+                    v-for="(item, index) in itemList" 
+                    :key="index"
+                    :index="index"
+                >
+                    <u-card 
+                        :title='item.BusinessAreaCode' 
+                        sub-title="副标题">
+                        <view class="" slot="body" >
+                            <view 
+                                class="collapse-item click-able"
+                                :class="{'u-m-t-20 u-m-b-20': key!=0 && key!=(item.Flows.length-1)}"
+                                v-for="(flow, key) in item.Flows"
+                                :key="key"
+                                @click="handlerClickFlowItem(key, flow)"
+                            >
+                                {{flow.Name}}
+                            </view>   
+                        </view>
+                        <!-- <view class="" slot="foot"><u-icon name="chat-fill" size="34" color="" label="30评论"></u-icon></view> -->
+                    </u-card>                
+                </u-collapse-item>
+            </u-collapse>   
         </view>
     </container>
 </template>

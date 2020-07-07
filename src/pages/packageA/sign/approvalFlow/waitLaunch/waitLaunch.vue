@@ -100,6 +100,7 @@
                 :is-fixed="isFixed" 
                 :is-back="isBack" 
                 :background="background" 
+                back-icon-size="40"
                 :back-text-style="{color: '#fff'}" 
                 :back-icon-name="backIconName" 
                 :back-text="backText"
@@ -276,7 +277,8 @@ export default  {
             rightSlot: false,
             useSlot: true,
             background: {
-                'background-image': 'linear-gradient(45deg, rgb(28, 187, 180), rgb(141, 198, 63))'
+                // 'background-image': 'linear-gradient(45deg, rgb(28, 187, 180), rgb(141, 198, 63))'
+                'background-image': 'linear-gradient(45deg, rgb(0, 174, 239), rgb(0,174,220))'
             },
             isBack: true,
             search: true,

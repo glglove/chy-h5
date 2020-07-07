@@ -4,6 +4,9 @@ export  default function findPageUrl(pageStr){
         case 'login':
             // return '/pages/login/login'
             return '/pages/amos-login/login'
+        // 搜索历史记录
+        case 'searchHistory':
+            return '/pages/packageA/find/searchHistory/searchHistory'            
         // 考勤页面
         case '/checkWork':
             return '/pages/packageA/sign/checkWork/checkWork'

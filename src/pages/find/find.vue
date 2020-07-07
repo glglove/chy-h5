@@ -9,6 +9,25 @@
 		padding-bottom: calc(var(--window-bottom));
 		// background-color: rgba(255,255,255,1);
 		background-color: rgba(245,245,245,1);
+		.searchBox {
+			padding:0 30upx 10upx 30upx;
+			box-sizing: border-box;
+			background: #ffffff;
+			margin: 10upx 0;
+			/deep/.u-content {
+				height: 80upx !important;
+				.u-input {
+					height: 100% !important
+				}        
+			}		
+		}
+		.search-box {width:95%;background-color:rgb(242,242,242);padding:15upx 2.5%;display:flex;justify-content:space-between;position:sticky;top: 0;}
+		.search-box .mSearch-input-box{width: 100%;}
+		.search-box .input-box {width:85%;flex-shrink:1;display:flex;justify-content:center;align-items:center;}
+		.search-box .search-btn {width:15%;margin:0 0 0 2%;display:flex;justify-content:center;align-items:center;flex-shrink:0;font-size:28upx;color:#fff;background:linear-gradient(to right,#ff9801,#ff570a);border-radius:60upx;}
+		.search-box .input-box>input {width:100%;height:60upx;font-size:32upx;border:0;border-radius:60upx;-webkit-appearance:none;-moz-appearance:none;appearance:none;padding:0 3%;margin:0;background-color:#ffffff;}
+		.placeholder-class {color:#9e9e9e;}
+		.search-keyword {width:100%;background-color:rgb(242,242,242);}		
 		.items {
 			background-color: #ffffff;
 			.item {
@@ -74,13 +93,45 @@
 			<!-- bg.find_bg:{{bg.find_bg}} -->
 			<!-- {{$configs.baseImgsUrl + $configs.baseUrlConfigs.imgs_bg.find_bg}} -->
 			<!--loading-->
-			<u-search placeholder="日照香炉生紫烟" v-model="searchKey"></u-search>
+			<!-- <view class="searchBox" @click="inputFocus">
+				<u-search 
+					placeholder="输入关键词" 
+					:clearabled="true" 
+					:show-action="false"
+					v-model="searchKey"
+					@focus="inputFocus"
+				></u-search>
+			</view> -->
+
+            <view class="search-box">
+                <!-- mSearch组件 如果使用原样式，删除组件元素-->
+                <search-history 
+                    class="mSearch-input-box" 
+                    :mode="2" 
+                    button="inside" 
+                    :placeholder="defaultKeyword" 
+                    @search="doSearch(false)" 
+					@inputFocus="inputFocus"
+                    @confirm="doSearch(false)" 
+                    v-model="keyword"
+                ></search-history>
+                <!-- 原样式 如果使用原样式，恢复下方注销代码 -->
+                <!-- 						
+                <view class="input-box">
+                    <input type="text" :adjust-position="true" :placeholder="defaultKeyword" @input="inputChange" v-model="keyword" @confirm="doSearch(false)"
+                    placeholder-class="placeholder-class" confirm-type="search">
+                </view>
+                <view class="search-btn" @tap="doSearch(false)">搜索</view> 
+                -->
+                <!-- 原样式 end -->
+            </view>
+
 			<!-- <u-icon name="rizhi" custom-prefix="my-iconfont">icon图标</u-icon>
 			<i class="my-iconfont-woguanzhude"></i> -->
 			<!-- <u-icon name="photo"></u-icon> -->
 
 			<!--已登录-->
-			<div v-if="userToken" class="find-hasLogin">
+			<view v-if="userToken" class="find-hasLogin">
 				<mescroll-uni 
 					class="mescroll_contentList_wrap"
 					ref="mescrollRef" 
@@ -126,7 +177,7 @@
 						</view>
 					</view>
 				</mescroll-uni>				
-			</div>
+			</view>
 			
 			<!---未登录-->
 			<view v-if="!userToken" class="find-notLogin">
@@ -147,16 +198,23 @@
 	// import {uniCard, uniPagination} from '@dcloudio/uni-ui'	
 	// import FooterExplain from '@/pages/components/footerExplain/footerExplain'
 	import { miniProApi } from '@/utils/mixins.js'
+		//引用mSearch组件，如不需要删除即可
+	import SearchHistory from '@/components/search-history/search-history'; 
 	import { mapGetters } from 'vuex'
 	export default {
 		mixins: [ miniProApi ],
         components: {
-            // uniCard,
-            // uniPagination,
-			// FooterExplain
+			SearchHistory
 		},			
 		data() {
 			return {
+				defaultKeyword: "",
+				keyword: "",
+				oldKeywordList: [],
+				hotKeywordList: [],
+				keywordList: [],
+				forbid: '',
+				isShowKeywordList: false,				
 				mescroll:null, 
 				upOption: {
 					auto: false, //是否在初始化完毕之后自动执行一次上拉加载的回调
@@ -357,6 +415,35 @@
 					console.log("上拉刷新")	
 					mescroll.endSuccess(1)						
 				}
+			},
+			inputFocus(){
+				debugger
+				let resUrl = this.$findPageUrl("searchHistory")
+				this.togoPage( resUrl, {}, 'navigate')
+			},		
+			//执行搜索
+			doSearch(keyword) {
+				debugger
+				// keyword = keyword===false?this.keyword:keyword;
+				// this.keyword = keyword;
+				// this.saveKeyword(keyword); //保存为历史 
+				// uni.showToast({
+				// 	title: keyword,
+				// 	icon: 'none',
+				// 	duration: 2000
+				// });
+				//以下是示例跳转淘宝搜索，可自己实现搜索逻辑
+				/*
+				//#ifdef APP-PLUS
+				plus.runtime.openURL(encodeURI('taobao://s.taobao.com/search?q=' + keyword));
+				//#endif
+				//#ifdef H5
+				window.location.href = 'taobao://s.taobao.com/search?q=' + keyword
+				//#endif
+				*/
+
+				let resUrl = this.$findPageUrl("searchHistory")
+				this.togoPage( resUrl, {}, 'navigate')				
 			},					
 		}
 	}

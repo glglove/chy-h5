@@ -5,10 +5,10 @@
 		<view id="sign" class="page content u-skeleton" slot="container-slot">
 			
 			<!--轮播图-->
-			<view class="box">		
-				<u-swiper :list="swiperList"></u-swiper>
+			<view class="box u-skeleton-rect">		
+				<u-swiper :list="swiperList" class="animated pulse"></u-swiper>
 			</view>
-			<div class="titWrap">
+			<div class="titWrap animated pulse">
 				常用应用
 			</div>
 			<u-grid :col="4" @click="handerClickItem">
@@ -45,7 +45,7 @@
 				</mescroll-uni>				
 			</view> -->
 			<!--引用骨架屏组件-->
-			<u-skeleton :loading="loading" :animation="true" bgColor="#ffffff" elColor="#fbfaf9"></u-skeleton>	
+			<u-skeleton :loading="loading" :animation="true" bgColor="#ffffff" elColor="rgba(235,234,232,.5)"></u-skeleton>	
 		</view>			
 	</container>		
 </template>
@@ -150,7 +150,7 @@
 		data() {
 			let that = this
 			return {
-				loading: true,
+				loading: true,  // 控制 骨架屏的显示/隐藏
 				bgColor: ['#65C5F4', '#34CAD6', '#FF8E8E', '#FF9E50', '#6FCA6C', '#65C5F4', '#34CAD6', '#FF8E8E', '#FF9E50', '#6FCA6C', '#FF8E8E', '#FF9E50', '#6FCA6C'],
 				swiperList: [{
 						image: 'http://img.zcool.cn/community/01449657fddbe4a84a0e282b8b3b2d.jpg@2o.jpg',
@@ -319,7 +319,7 @@
 			// 通过延时模拟向后端请求数据，调隐藏骨架屏
 			setTimeout(() => {
 				this.loading = false;
-			}, 2000)
+			}, 1000)
 		},
 		onShow() {
 

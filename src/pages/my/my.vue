@@ -47,7 +47,11 @@
 <template>
 	<container :containerLoading="containerLoading">
 		<view id="my" class="page borderBox" slot="container-slot">
-			<u-navbar :is-back="false" title="我的" :border-bottom="false">
+			<u-navbar 
+				:is-back="false" 
+				title="我的" 
+				:border-bottom="false"
+				:background="background">
 				<!-- <view class="u-f u-f-jfd" style="width: 100%;">
 					<view class="camera u-f u-row-center">
 						<u-icon name="camera-fill" color="#000000" size="48"></u-icon>
@@ -179,6 +183,9 @@
 				user: {
 					name: '张10032',
 					empNo: '89757'
+				},
+				background: {
+					backgroundColor: 'rgba(0,174,239,1)',
 				},
 				customBtnStyle: {
 					backgroundColor: '#00aeef !important', // 注意驼峰命名，并且值必须用引号包括，因为这是对象
