@@ -2,10 +2,19 @@
 	<view class="serach">
 		<view class="content" :style="{'border-radius':radius+'px'}">
 			<!-- HM修改 增加进入输入状态的点击范围 -->
-			<view class="content-box" :class="{'center':mode === 2}" >
+			<view class="content-box" :class="{'center':mode === 2}">
 				<text class="icon icon-serach"></text>
 				<!-- HM修改 增加placeholder input confirm-type confirm-->
-				<input  :placeholder="placeholder" @input="inputChange"  confirm-type="search" @confirm="triggerConfirm" class="input" :class="{'center':!active && mode === 2}" :focus="isFocus" v-model="inputVal" @focus="focus" @blur="blur"/>
+				<input  
+					:placeholder="placeholder" 
+					@input="inputChange"  
+					confirm-type="search" 
+					@confirm="triggerConfirm" 
+					class="input" :class="{'center':!active && mode === 2}" 
+					:focus="isFocus" 
+					v-model="inputVal" 
+					@focus="focus" 
+					@blur="blur"/>
 				<!-- <view v-if="!active && mode === 2" class="input sub" @click="getFocus">请输入搜索内容</view> -->
 				<!-- HM修改 @click换成@click.stop阻止冒泡 -->
 				<text v-if="isDelShow" class="icon icon-del"  @click.stop="clear"></text>
@@ -47,6 +56,10 @@ export default {
 		radius: {
 			value: String,
 			default: 60
+		},
+		isFocus: {
+			value: Boolean,
+			default: true
 		}
 	},
 	data() {
@@ -54,8 +67,7 @@ export default {
 			active: false,
 			inputVal: '',
 			searchName: '取消',
-			isDelShow: false,
-			isFocus: true
+			isDelShow: false
 		};
 	},
 	methods: {

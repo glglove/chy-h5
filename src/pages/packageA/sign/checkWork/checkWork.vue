@@ -45,6 +45,7 @@ text{
             考勤页面
 
             <view class="map_container" :style="mapContBotm">
+
                 <map class="map" 
                     id="map" 
                     :longitude="longitude" 
@@ -53,6 +54,29 @@ text{
                     :markers="markers" 
                     @markertap="makertap"
                 ></map>
+
+                <!-- <b-map 
+                    class="map-contain" 
+                    :scroll-wheel-zoom="true" 
+                    :center="center" 
+                    :zoom="zoom" 
+                    MapType="BMAP_SATELLITE_MAP" 
+                    @ready="mapReady">
+                        <bm-geolocation 
+                            anchor="BMAP_ANCHOR_BOTTOM_RIGHT" 
+                            @locationSuccess="getMyLocation()" 
+                            :showAddressBar="true"
+                            :autoLocation="true"
+                        ></bm-geolocation>
+                        <bm-marker 
+                            @dragend="markerDrag" 
+                            :position="center" 
+                            :dragging="true" 
+                            animation="BMAP_ANIMATION_BOUNCE">
+                        <bm-label content="我爱北京天安门" :labelStyle="{color: 'red', fontSize : '24px'}" :offset="{width: -35, height: 30}"/> 
+                    </bm-marker>
+                </b-map>     -->
+
             </view>
             <view class="map_text" :style="mapTxtHeight">
                 <view 
@@ -81,7 +105,8 @@ text{
 
 <script>
 import { miniProApi } from '@/utils/mixins.js'
-import amap from '@/utils/js_sdk/js-amap/amap-wx.js'
+import MapLoader from '@/utils/AMap.js'
+// import amap from '@/utils/js_sdk/js-amap/amap-wx.js'
 import base from '@/api/base'
 import {
     getForm
@@ -93,21 +118,33 @@ export default  {
     mixins: [ miniProApi ],
     data(){
         return {
+            resAmap:null,
+            map: null,
             amapPlugin: null,
             key_wechat: base.amapConfigs.aitras_wechat,
             key_web: base.amapConfigs.aitras_web,
             markers: [{}, {}, {}],
             poisdatas: [{}, {}, {}],
             title: 'map',
-            latitude: '',
-            longitude: '',  
+            latitude: '38.913423', // 初始经度
+            longitude: '116.368904',  // 初始维度
+            zoom: 15,
             textData:[],
             mapContBotm:'',
             mapTxtHeight:''
         }
     },
     onLoad(){
-        this.initAmap()
+        // #ifndef H5
+        // 初始化 高德地图(非H5端)
+        // this.initAmap() 
+        // #endif
+        // #ifdef H5
+        // H5端 初始化 高德地图
+        // this.initAmap_web()
+        // #endif
+        // 初始化 百度地图
+        // this.initMap()
     },
     onShow(){
 
@@ -118,39 +155,91 @@ export default  {
     methods: {
         initMap () {
             let _this = this
-            var map = new BMap.Map('allmap');
+            var map = new BMap.Map('map');
             var point = new BMap.Point(108.95, 34.27);
             map.centerAndZoom(point, 15);
             map.addControl(new BMap.MapTypeControl());
             map.enableScrollWheelZoom(true);
             map.enableDoubleClickZoom(true);
             var geolocation = new BMap.Geolocation();
-            // geolocation.getCurrentPosition(function (r) {
-            //     var mk = new BMap.Marker(r.point);
-            //     map.addOverlay(mk); // 标出所在地
-            //     map.panTo(r.point); // 地图中心移动
-            //     var point = new BMap.Point(r.point.lng, r.point.lat); // 用所定位的经纬度查找所在地省市街道等信息
-            //     var opts = {
-            //     width: 150,
-            //     height: 50,
-            //     title: '地址：'
-            //     }
-            //     var gc = new BMap.Geocoder();
-            //     gc.getLocation(point, function (rs) {
-            //     // var addComp = rs.addressComponents;
-            //     console.log('rs', rs)
-            //     _this.description = rs.business
-            //     var infoWindow = new BMap.InfoWindow(_this.description, opts);// 创建信息窗口对象
-            //     mk.addEventListener('click', function () {
-            //         map.openInfoWindow(infoWindow, point);
-            //     });
-            //     map.enableScrollWheelZoom(true);
-            //     map.openInfoWindow(infoWindow, point);// 开启信息窗口
-            //     });
-            // }, {enableHighAccuracy: true})
+            geolocation.getCurrentPosition(function (r) {
+                var mk = new BMap.Marker(r.point);
+                map.addOverlay(mk); // 标出所在地
+                map.panTo(r.point); // 地图中心移动
+                var point = new BMap.Point(r.point.lng, r.point.lat); // 用所定位的经纬度查找所在地省市街道等信息
+                var opts = {
+                width: 150,
+                height: 50,
+                title: '地址：'
+                }
+                var gc = new BMap.Geocoder();
+                gc.getLocation(point, function (rs) {
+                // var addComp = rs.addressComponents;
+                console.log('rs', rs)
+                _this.description = rs.business
+                var infoWindow = new BMap.InfoWindow(_this.description, opts);// 创建信息窗口对象
+                mk.addEventListener('click', function () {
+                    map.openInfoWindow(infoWindow, point);
+                });
+                map.enableScrollWheelZoom(true);
+                map.openInfoWindow(infoWindow, point);// 开启信息窗口
+                });
+            }, {enableHighAccuracy: true})
         },  
-        // 初始化 高德地图  
+        // 初始化 高德地图 （H5端） 
+        async initAmap_web () {
+            let that=this;
+            try {
+                this.resAmap = await MapLoader();
+                this.$nextTick(function() {
+                    // this.getBroewerLatLng();
+                    var map = new this.resAmap.Map('map', {
+                        center: [this.longitude , this.latitude],
+                        zoom: this.zoom
+                    });
+                    this.map = map;
+                    console.log(this.map)
+                    this.resAmap.plugin('AMap.Geolocation', () => {
+                        var geolocation = new this.resAmap.Geolocation({
+                            enableHighAccuracy: true, //是否使用高精度定位，默认:true
+                            timeout: 10000, //超过10秒后停止定位，默认：5s
+                            buttonPosition: 'RB', //定位按钮的停靠位置
+                            // buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                            zoomToAccuracy: true, //定位成功后是否自动调整地图视野到定位点
+
+                        });
+                        map.addControl(geolocation);
+                        geolocation.getCurrentPosition(function(status, result) {
+                            if (status == 'complete') {
+                                onComplete(result)
+                            } else {
+                                onError(result)
+                            }
+                        });
+
+                    });
+                    
+                    //解析定位结果
+                    var then = this;
+
+                    function onComplete(data) {
+                        console.log(data) // 获取到的定位信息
+                        then.latitude = data.latitude;
+                        then.longitude = data.longitude;
+                    }
+
+                    function onError(data) {
+                        console.log(data) // 定位失败的信息
+                    }
+
+                })
+            } catch (e) {
+                console.log(e)
+            }
+        },        
+        // 初始化 高德地图 （非H5端） 
         initAmap () {
+            debugger
             let that=this;
             this.amapPlugin = new amap.AMapWX({//初始化
                 //#ifndef H5
@@ -160,63 +249,68 @@ export default  {
                 key: this.key_web
                 //#endif
             })
-            this.amapPlugin.getRegeo({//我的位置
-                iconPath: "@/assets/pic/wechat-types.png",
-                iconWidth: 48,
-                iconHeight: 48,
-                success: function(data){
-                    debugger						
-                    that.latitude= data[0].latitude;					
-                    that.longitude= data[0].longitude;				
-                },
-                fail: function (err) {
-                    console.log(err)
-                },
-            })
-
-            let params = {
-                iconPathSelected: '@/assets/pic/web-types.png"',
-                iconPath: '@/assets/pic/study-types.png',
-                success: function(data){
-                    markersData = data.markers;					
-                    poisData = data.poisData;
-                
-                    if(markersData.length > 0){
-                        that.markers = markersData	
-                        that.textData = poisData
-                        that.mapContBotm = 'bottom:400px'
-                        that.mapTxtHeight = 'height:400px';
-                    }else{
-                        uni.getLocation({
-                            type: 'gcj02',
-                            geocode:true,
-                            success: function(res) {
-                                debugger
-                                that.latitude=res.latitude						 
-                                that.longitude=res.longitude			  
-                            },
-                            fail: function(res){
-                                debugger
-                                console.log(res)						  
-                            }
-                        })
-                        
-                        that.textData= [{
-                            name: '抱歉，未找到结果',
-                            address: ''
-                        }]
-                        
-                    }
-                
-                },
-                fail: function(info){
-                    debugger
-                    console.log(info)
-                }
-            }
-            params.querykeywords='医院'//显示附近的医院
+            console.log("初始化的高德地图对象---------",this.amapPlugin)
             this.$nextTick(() => {
-                this.amapPlugin.getPoiAround(params)    
+                this.amapPlugin.getRegeo({//我的位置
+                    iconPath: "@/assets/pic/wechat-types.png",
+                    iconWidth: 48,
+                    iconHeight: 48,
+                    success: function(data){
+                        debugger						
+                        that.latitude= data[0].latitude;					
+                        that.longitude= data[0].longitude;	
+                        // that.toast(that.latitude)			
+                    },
+                    fail: function (err) {
+                        console.log(err)
+                        // window.alert(err)
+                    },
+                })
+
+                let params = {
+                    iconPathSelected: '@/assets/pic/web-types.png"',
+                    iconPath: '@/assets/pic/study-types.png',
+                    success: function(data){
+                        markersData = data.markers;					
+                        poisData = data.poisData;
+                    
+                        if(markersData.length > 0){
+                            that.markers = markersData	
+                            that.textData = poisData
+                            that.mapContBotm = 'bottom:400px'
+                            that.mapTxtHeight = 'height:400px';
+                        }else{
+                            uni.getLocation({
+                                type: 'gcj02',
+                                geocode:true,
+                                success: function(res) {
+                                    debugger
+                                    that.latitude=res.latitude						 
+                                    that.longitude=res.longitude			  
+                                },
+                                fail: function(res){
+                                    debugger
+                                    console.log(res)						  
+                                }
+                            })
+                            
+                            that.textData= [{
+                                name: '抱歉，未找到结果',
+                                address: ''
+                            }]
+                            
+                        }
+                    
+                    },
+                    fail: function(info){
+                        debugger
+                        console.log(info)
+                    }
+                }
+                params.querykeywords='医院'//显示附近的医院
+                this.$nextTick(() => {
+                    this.amapPlugin.getPoiAround(params)    
+                })
             })
         },
         makertap: function(e) {

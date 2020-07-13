@@ -23,6 +23,15 @@
         </noscript>
         <div id="app"></div>
         <!-- built files will be auto injected -->
+
+        <script>
+        // #ifdef H5
+        // widows 增加resize 事件
+            window.addEventListener("resize", function(){
+                location.reload()
+            })
+        // #endif
+        </script>
     </body>
 
 </html>

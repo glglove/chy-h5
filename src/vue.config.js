@@ -1,6 +1,6 @@
 module.exports = {
     externals: {
-      // "BMap": "BMap" 
+      // "BMap": "BMap", // 配置的使用 百度地图
       "AMap": "AMap", // 配置的使用高德地图
     },
     // 基本路径

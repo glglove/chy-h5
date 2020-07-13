@@ -26,6 +26,12 @@ Vue.component('popup-cmp', popupCmp)
 
 import configs from '@/api/configs.js'
 
+// import BMap from 'vue-baidu-map'
+// Vue.use(BMap, {
+//   // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
+//   ak: 'aIpivEs7hmHI2eMpyGDi7FIgeRmMibl8'
+// })
+
 
 
 // // 引入 socket.js 文件

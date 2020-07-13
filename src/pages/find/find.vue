@@ -109,6 +109,7 @@
                     class="mSearch-input-box" 
                     :mode="2" 
                     button="inside" 
+					:isFocus="false"
                     :placeholder="defaultKeyword" 
                     @search="doSearch(false)" 
 					@inputFocus="inputFocus"
